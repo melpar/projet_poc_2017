@@ -1,0 +1,3 @@
+# Module project_poc_2017
+# RPC service class, partial path of RPC policy file
+com.project.poc.client.GreetingService, 4308D017B68023533B64BF71727283EC.gwt.rpc
