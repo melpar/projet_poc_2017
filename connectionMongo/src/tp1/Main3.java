@@ -12,7 +12,7 @@ public class Main3 {
 		
 		Base base = new Base();
 		//base.ouvrir();
-		base.ouvrirMongo2();
+		base.ouvrirMongo3();
 		
 		
 	}

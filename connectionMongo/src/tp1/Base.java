@@ -67,7 +67,7 @@ public class Base {
 
 		 MongoClientOptions options = MongoClientOptions.builder().sslEnabled(true).build();
 
-		 MongoClient mongoClient = new MongoClient(new ServerAddress("obiwan2.univ-brest.fr", 27017),
+		 MongoClient mongoClient = new MongoClient(new ServerAddress("mongodb://obiwan2.univ-brest.fr:27017"),
 		                                           Arrays.asList(credential),
 		                                           options);
 		 MongoDatabase database2 = mongoClient.getDatabase("BDMongomaster033");
@@ -88,6 +88,27 @@ public class Base {
 			e.printStackTrace();
 		}
 	}
+
+		   
+		public void ouvrirMongo3(){  
+		      
+		      // Creating a Mongo client 
+		      MongoClient mongo = new MongoClient( "obiwan2.univ-brest.fr" , 27017 ); 
+		   
+		      // Creating Credentials 
+		      MongoCredential credential; 
+		      credential = MongoCredential.createCredential("master033", "BDMongomaster033", 
+		         "m76a971a".toCharArray()); 
+		      System.out.println("Connected to the database successfully");  
+		      
+		      // Accessing the database 
+		      MongoDatabase database = mongo.getDatabase("BDMongomaster033"); 
+		      System.out.println("Credentials ::"+ credential);     
+		      
+				 MongoCollection<Document> collection = database.getCollection("oeuvres");
+				 //System.out.println(collection.count());
+				 System.out.println(collection.find().first().toJson());
+		   } 
 	
 	public void fermer() {
 		try {
