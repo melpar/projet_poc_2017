@@ -17,13 +17,14 @@ import com.mongodb.client.MongoDatabase;
 public class BaseMongoDB {
 	public static void main(String[]args){
 		// Création de la connexion à MongoDB
-		MongoClientURI uri = new MongoClientURI("mongodb://master041:4229e35z@obiwan2.univ-brest.fr/?authSource=db1");
+		MongoClientURI uri = new MongoClientURI("mongodb://obiwan2.univ-brest.fr");
 		MongoClient mongoClient = new MongoClient(uri);
 		// Notre base de données
 		MongoDatabase db = mongoClient.getDatabase("BDMongomaster041");
 		
 		MongoCollection<Document> collection = db.getCollection("oeuvres");
 		Document myDoc = collection.find().first();
+		System.out.println(myDoc);
 //		System.out.println(myDoc.toJson());
 		//System.out.println(artistes.findOne());
 		//DBObject artiste = artistes.findOne();

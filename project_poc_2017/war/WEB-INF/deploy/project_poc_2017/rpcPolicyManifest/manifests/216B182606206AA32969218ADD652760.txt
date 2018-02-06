@@ -1,2 +1,0 @@
-serviceClass: com.project.poc.client.GreetingService
-path: 4308D017B68023533B64BF71727283EC.gwt.rpc
