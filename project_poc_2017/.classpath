@@ -5,8 +5,10 @@
 	<classpathentry kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="D:/M1/SI/mysql-connector-java-5.1.32-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/parlant/Downloads/neo4j-java-driver-1.6.zip"/>
 	<classpathentry kind="lib" path="D:/M1/SE/neo4j-kernel-1.6.jar/neo4j-kernel-1.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/parlant/Downloads/jar_files/neo4j-java-driver-1.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/parlant/Downloads/bson-3.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/parlant/Downloads/mongodb-driver-core-3.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/parlant/Downloads/mongodb-driver-3.0.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
