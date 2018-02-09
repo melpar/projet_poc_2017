@@ -3,37 +3,45 @@ package bean;
 import annotation.Id;
 import annotation.Table;
 
-@Table(name="T_PERSONNE_PER")
+@Table(name = "T_PERSONNE_PER")
 public class Personne {
-	private String PER_nom;
-	private String PER_prenom;
-	private boolean PER_risque;
-	
+
+	private String per_nom;
+	private String per_prenom;
+	private boolean per_risque;
+
 	@Id
-	private String PER_id;
-	
-	public String getPER_nom() {
-		return PER_nom;
+	private String per_id;
+
+	public String getPer_nom() {
+		return per_nom;
 	}
-	public void setPER_nom(String pER_nom) {
-		PER_nom = pER_nom;
+
+	public void setPer_nom(String pER_nom) {
+		per_nom = pER_nom;
 	}
-	public String getPER_prenom() {
-		return PER_prenom;
+
+	public String getPer_prenom() {
+		return per_prenom;
 	}
-	public void setPER_prenom(String pER_prenom) {
-		PER_prenom = pER_prenom;
+
+	public void setPer_prenom(String pER_prenom) {
+		per_prenom = pER_prenom;
 	}
-	public boolean isPER_risque() {
-		return PER_risque;
+
+	public boolean isPer_risque() {
+		return per_risque;
 	}
-	public void setPER_risque(boolean pER_risque) {
-		PER_risque = pER_risque;
+
+	public void setPer_risque(boolean pER_risque) {
+		per_risque = pER_risque;
 	}
-	public String getPER_id() {
-		return PER_id;
+
+	public String getPer_id() {
+		return per_id;
 	}
-	public void setPER_id(String pER_id) {
-		PER_id = pER_id;
+
+	public void setPer_id(String pER_id) {
+		per_id = pER_id;
 	}
 }

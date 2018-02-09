@@ -11,8 +11,8 @@ public class TestMariaDB {
 		BaseMariaDB b = new BaseMariaDB();
 		b.ouvrir();
 		List<Personne> personnes = b.getPersonnes();
-		for(Personne p : personnes){
-			System.out.println(p.getPER_id()+" "+p.getPER_nom()+" "+p.getPER_prenom()+" "+p.isPER_risque());
+		for (Personne p : personnes) {
+			System.out.println(p.getPer_id() + " " + p.getPer_nom() + " " + p.getPer_prenom() + " " + p.isPer_risque());
 		}
 
 	}

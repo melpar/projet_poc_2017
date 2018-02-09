@@ -9,19 +9,20 @@ import java.util.ResourceBundle;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+
 import bean.Personne;
 
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";
 	private Connection co;
-	
-	public static void main(String[]args){
+
+	public static void main(String[] args) {
 		ResourceBundle resource = ResourceBundle.getBundle(config);
 		String url = resource.getString("url");
 		System.out.println(url);
 	}
-	
-	public boolean ouvrir(){
+
+	public boolean ouvrir() {
 		ResourceBundle resource = ResourceBundle.getBundle(config);
 		String url = resource.getString("url");
 		String user = resource.getString("user");
@@ -35,8 +36,8 @@ public class BaseMariaDB {
 		}
 		return true;
 	}
-	
-	public void fermer(){
+
+	public void fermer() {
 		try {
 			co.close();
 		} catch (SQLException e) {
@@ -52,17 +53,17 @@ public class BaseMariaDB {
 		try {
 			st = (Statement) co.createStatement();
 			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
-			while(rs.next()){
+			while (rs.next()) {
 				Personne p = new Personne();
-				p.setPER_id(rs.getString("PER_id"));
-				p.setPER_nom(rs.getString("PER_nom"));
-				p.setPER_prenom(rs.getString("PER_prenom"));
-				p.setPER_risque(rs.getBoolean("PER_risque"));
+				p.setPer_id(rs.getString("PER_id"));
+				p.setPer_nom(rs.getString("PER_nom"));
+				p.setPer_prenom(rs.getString("PER_prenom"));
+				p.setPer_risque(rs.getBoolean("PER_risque"));
 				personnes.add(p);
 			}
-			if(st != null){
+			if (st != null) {
 				st.close();
-				if(rs!=null){
+				if (rs != null) {
 					rs.close();
 				}
 			}
@@ -70,8 +71,8 @@ public class BaseMariaDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return personnes;
-		
+
 	}
 }
