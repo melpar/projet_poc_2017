@@ -86,6 +86,33 @@ public class BaseMariaDB {
 
 	}
 
+	public boolean connexion(String mail, String mdp) {
+		ResultSet rs;
+		try {
+			String query = "select * from T_CONNEXION_CON WHERE CON_idMail = ? AND CON_motDePasse = ?";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+			preparedStmt.setString(2, mdp);
+
+			rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+			if (preparedStmt != null) {
+				preparedStmt.close();
+				if (rs != null) {
+					rs.close();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+
+	}
+
 	public boolean ajouterNewsletter(String mail) {
 		ResultSet rs;
 		PreparedStatement st;

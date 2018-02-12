@@ -17,6 +17,10 @@
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
 
+	<%
+	System.out.println("test : "+session.getAttribute("connexion"));
+	System.out.println("test : "+session.getAttribute("mail"));
+	%>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -39,8 +43,9 @@
             <div class="w3-padding-32">
               <button class="w3-button w3-theme-d3" onclick="document.getElementById('id01').style.display='block'" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button>
             </div>
+            <button class="w3-btn w3-theme" onclick="move()" style="margin-right: 5px">Click Me</button>
           </div>
-        <div>
+       
     </header>
     
 

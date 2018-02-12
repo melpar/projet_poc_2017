@@ -37,6 +37,20 @@ if(request.getParameter("newsletter") != null){
 	
 }
 %>
+
+<%
+	if(request.getParameter("connexion") != null){
+		BaseMariaDB base = new BaseMariaDB();
+		base.ouvrir();
+		String mail = request.getParameter("mail");
+		String mdp = request.getParameter("mdp");
+		boolean existe = base.connexion(mail, mdp); 
+		System.out.println("connexion? "+existe);
+		base.fermer();
+		session.setAttribute("connexion", "vrai");
+		session.setAttribute("mail", mail);
+	}
+%>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -49,6 +63,10 @@ if(request.getParameter("newsletter") != null){
 
     <h1>
     	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg"></a>
+    	<%
+    	if(session.getAttribute("connexion") != null){ %>
+        <button class="w3-btn w3-theme" onclick="move()" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</button>
+    	<%} %>
     </h1>
     
     
@@ -60,6 +78,7 @@ if(request.getParameter("newsletter") != null){
               <a href="https://www.facebook.com/ticketforchange/videos/1136535766478310/?hc_ref=ARR9BJ7PCWEd9Fk0W0IN4uXt4jMccNg3KYmq0LrZfW7PgmVKxSfrSQ44T32fLHJUBCI&pnref=story"><button class="w3-button w3-theme-d3" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button></a>
             </div>
           </div>
+          
     </header>
     
     <div class="w3-row-padding w3-center w3-margin-top">
@@ -118,18 +137,17 @@ if(request.getParameter("newsletter") != null){
         </div>
         
         <div class="w3-half">
-            <form class="w3-container w3-card-4">
+            <form class="w3-container w3-card-4" method="GET">
                 <h2>Connexion</h2>
                 <div class="w3-section">
-                    <input class="w3-input" type="text" required>
+                    <input class="w3-input" name="mail" type="text" required>
                     <label>Mail</label>
                     </div>
                 <div class="w3-section">
-                    <input class="w3-input" type="password" required>
+                    <input class="w3-input" name="mdp" type="password" required>
                     <label>Mot de passe</label>
                 </div>
-        		<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;" onclick="window.location='connexion.jsp';">Connexion</button>
-            </form>
+				<input type="submit" name="connexion" class="w3-button w3-theme-d3" style="font-weight:900;" value="Valider">            </form>
             </div>
         </div>
     <hr>
