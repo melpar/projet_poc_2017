@@ -3,7 +3,7 @@ package test;
 import java.util.List;
 
 import base.BaseMariaDB;
-import bean.Personne;
+import bean.mariadb.Personne;
 
 public class TestMariaDB {
 

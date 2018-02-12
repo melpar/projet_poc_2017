@@ -1,4 +1,4 @@
-package bean;
+package bean.mariadb;
 
 import annotation.Id;
 import annotation.Table;

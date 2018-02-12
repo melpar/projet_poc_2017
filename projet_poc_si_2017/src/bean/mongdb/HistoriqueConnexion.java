@@ -1,4 +1,4 @@
-package bean;
+package bean.mongdb;
 
 import java.util.Date;
 import java.util.HashMap;

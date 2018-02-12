@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import bean.Personne;
+import bean.mariadb.Personne;
 
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";

@@ -1,4 +1,4 @@
-package bean;
+package bean.mariadb;
 
 import java.util.ArrayList;
 import java.util.List;

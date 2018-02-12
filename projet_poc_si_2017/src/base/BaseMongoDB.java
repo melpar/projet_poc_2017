@@ -20,7 +20,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
-import bean.HistoriqueConnexion;
+import bean.mongdb.HistoriqueConnexion;
 
 public class BaseMongoDB {
 	
