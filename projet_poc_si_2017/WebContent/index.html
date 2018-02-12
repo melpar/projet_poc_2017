@@ -28,14 +28,14 @@
     </noscript>
 
     <h1>
-		<img alt="logo" src="img/cropped-logoWeMoe.jpg">
+    	<a href="/projet_poc_si_2017/"><img alt="logo" src="img/cropped-logoWeMoe.jpg" href="index.html"></a>
     </h1>
     
     
     <header class="w3-container w3-theme w3-padding" id="myHeader">
         <div class="w3-center">
           <h4>We moë, une innovation sociale.</h4>
-          <h4>Gaïdig Le Moing, co-fondatrice de we moë nous explique pourquoi elle s'est lancée dans cette aventure et nous partage son témoignage.</h4>
+          <h4>Gaëdig Le Moing, co-fondatrice de we moë nous explique pourquoi elle s'est lancée dans cette aventure et nous partage son témoignage.</h4>
             <div class="w3-padding-32">
               <button class="w3-button w3-theme-d3" onclick="document.getElementById('id01').style.display='block'" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button>
             </div>
@@ -47,25 +47,26 @@
         <div class="w3-half">
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux changer d'assurance</h3><br>
-                <img alt="logo" src="img/logo-changement.png" with="180px" height="180px">
-                <p>Il n’est pas évident de s’y retrouver dans tous les différents textes de 
+                <img alt="logo" src="img/logo-changement.png" height="60px">
+                <p>Il n'est pas évident de s'y retrouver dans tous les différents textes de 
                 loi qui entourent le changement de son assurance emprunteur : loi Chatel, loi 
-                Lagarde, loi Hamon, loi Bourquin sur la résiliation annuelle… Si vous avez souscrit
-                 à un emprunt et que vous vous demandez si l’on peut changer d’assurance 
+                Lagarde, loi Hamon, loi Bourquin sur la résiliation annuelle. Si vous avez souscrit
+                 à un emprunt et que vous vous demandez si l'on peut changer d'assurance 
                  de crédit et comment faire pour la remplacer, voici les réponses à toutes 
                  vos questions</p>
-				<button id="bouton_infos_ass" class="w3-button w3-theme-d3" onclick="document.getElementById('bouton_infos_ass').style.display='block'" style="font-weight:900;">En savoir plus</button>                 
+				<button id="bouton_infos_ass" class="w3-button w3-theme-d3" onclick="" style="font-weight:900;">En savoir plus</button>                 
             </div>
         </div>
         
         <div class="w3-half">
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux faire un emprunt et j'ai besoin d'informations</h3><br>
-                <img alt="logo" src="img/logo-cheque.png" with="200px" height="200px">
-                <p>informations</p>
-                <p>informations</p>
-                <p>informations</p>
-                <p>informations</p>
+                <img alt="logo" src="img/logo-cheque.png" height="60px">
+                <p>Vous souhaitez réaliser un emprunt mais vous êtes perdu dans les démarches à
+                suivre? Voici les réponses à vos questions. Pour des informations plus adaptées 
+                à votre parcours, n'hésitez pas à vous inscrire.</p>
+                <button id="bouton_infos_cre" class="w3-button w3-theme-d3" onclick="" style="font-weight:900;">En savoir plus</button>                 
+                
             </div>
         </div>
     </div>
@@ -88,49 +89,18 @@
 
     
     <hr>
-    <h2 class="w3-center">Inscription ou connection</h2>
+    <h2 class="w3-center">Inscription ou connexion</h2>
     </div>
     
     
     <div class="w3-row-padding">
+        <div class="w3-half">
+        	<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;" onclick="window.location='creation_compte.jsp';">Créer un compte</button>
+        </div>
         
         <div class="w3-half">
             <form class="w3-container w3-card-4">
-                <h2>Inscription</h2>
-                <div class="w3-section">
-                    <input class="w3-input" type="text" required>
-                    <label>Non</label>
-                </div>
-                <div class="w3-section">
-                    <input class="w3-input" type="text" required>
-                    <label>Prenom</label>
-                </div>
-                <div class="w3-section">
-                    <input class="w3-input" type="text" required>
-                    <label>Email</label>
-                </div>
-                
-                <div class="w3-section">
-                    <input class="w3-input" type="password" required>
-                    <label>Mot de passe</label>
-                </div>
-                
-                <div class="w3-row">
-                    
-                    <div class="w3-half">
-                        <input id="male" class="w3-radio" type="radio" name="gender" value="male" checked>
-                        <label>Male</label>
-                        <br>
-                        <input id="female" class="w3-radio" type="radio" name="gender" value="female">
-                        <label>Female</label>
-                        <br>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="w3-half">
-            <form class="w3-container w3-card-4">
-                <h2>Connection</h2>
+                <h2>Connexion</h2>
                 <div class="w3-section">
                     <input class="w3-input" type="text" required>
                     <label>Mail</label>
@@ -139,6 +109,7 @@
                     <input class="w3-input" type="password" required>
                     <label>Mot de passe</label>
                 </div>
+        		<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;"onclick="window.location='connexion.jsp';">Connexion</button>
             </form>
             </div>
         </div>
@@ -216,7 +187,6 @@
             <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
                 <i class="fa fa-chevron-circle-up"></i></span></a>
         </div>
-        <p>Remember to check out our  <a href="w3css_references.asp" class="w3-btn w3-theme-light" target="_blank">W3.CSS Reference</a></p>
     </footer>
     
   </body>
