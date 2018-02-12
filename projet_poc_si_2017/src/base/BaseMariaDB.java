@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import bean.mariadb.Personne;
@@ -15,6 +16,15 @@ import bean.mariadb.Personne;
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";
 	private Connection co;
+
+	static {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		ResourceBundle resource = ResourceBundle.getBundle(config);
@@ -74,5 +84,26 @@ public class BaseMariaDB {
 
 		return personnes;
 
+	}
+
+	public boolean ajouterNewsletter(String mail) {
+		ResultSet rs;
+		PreparedStatement st;
+		try {
+			String query = " insert into T_LISTEDIFFUSION_LIS (LIS_mail)" + " values (?)";
+
+			// create the mysql insert preparedstatement
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+
+			// execute the preparedstatement
+			preparedStmt.execute();
+
+			co.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

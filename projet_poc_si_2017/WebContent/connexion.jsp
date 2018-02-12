@@ -28,7 +28,7 @@
     </noscript>
 
     <h1>
-    	<a href="/projet_poc_si_2017/"><img alt="logo" src="img/cropped-logoWeMoe.jpg" href="index.html"></a>
+    	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg" href="index.html"></a>
     </h1>
     
     

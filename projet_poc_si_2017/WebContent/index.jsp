@@ -1,5 +1,8 @@
 <!doctype html>
 
+<%@page import="base.BaseMariaDB"%>
+<%@page import="javafx.scene.control.Alert"%>
+<%@page import="com.sun.glass.ui.Window"%>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -11,12 +14,29 @@
     <!--                                           -->
     <!-- Any title is fine                         -->
     <!--                                           -->
-    <title>We moÃ«</title>
+    <title>We moë</title>
     
     
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
 
+<%
+if(request.getParameter("newsletter") != null){
+	BaseMariaDB base = new BaseMariaDB();
+	base.ouvrir();
+	String mail = request.getParameter("mail");
+	base.ajouterNewsletter(mail);
+	base.fermer();
+	%>
+	
+	<script>
+		var mail = window.location.search.substr(1).split("&")[0].split("=")[1];
+		alert("Votre adresse a bien été enregistrée. Merci de votre confiance.");
+	</script>
+	<%
+	
+}
+%>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -34,10 +54,10 @@
     
     <header class="w3-container w3-theme w3-padding" id="myHeader">
         <div class="w3-center">
-          <h4>We moÃ«, une innovation sociale.</h4>
-          <h4>GaÃ«dig Le Moing, co-fondatrice de we moÃ« nous explique pourquoi elle s'est lancÃ©e dans cette aventure et nous partage son tÃ©moignage.</h4>
+          <h4>We moë, une innovation sociale.</h4>
+          <h4>Gaëdig Le Moing, co-fondatrice de we moë nous explique pourquoi elle s'est lancée dans cette aventure et nous partage son témoignage.</h4>
             <div class="w3-padding-32">
-              <a href="https://www.facebook.com/ticketforchange/videos/1136535766478310/?hc_ref=ARR9BJ7PCWEd9Fk0W0IN4uXt4jMccNg3KYmq0LrZfW7PgmVKxSfrSQ44T32fLHJUBCI&pnref=story"><button class="w3-button w3-theme-d3" style="font-weight:900;">Pour voir la vidÃ©o, c'est par ici.</button></a>
+              <a href="https://www.facebook.com/ticketforchange/videos/1136535766478310/?hc_ref=ARR9BJ7PCWEd9Fk0W0IN4uXt4jMccNg3KYmq0LrZfW7PgmVKxSfrSQ44T32fLHJUBCI&pnref=story"><button class="w3-button w3-theme-d3" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button></a>
             </div>
           </div>
     </header>
@@ -47,11 +67,11 @@
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux changer d'assurance</h3><br>
                 <img alt="logo" src="img/logo-changement.png" height="60px">
-                <p>Il n'est pas Ã©vident de s'y retrouver dans tous les diffÃ©rents textes de 
+                <p>Il n'est pas évident de s'y retrouver dans tous les différents textes de 
                 loi qui entourent le changement de son assurance emprunteur : loi Chatel, loi 
-                Lagarde, loi Hamon, loi Bourquin sur la rÃ©siliation annuelle. Si vous avez souscrit
-                 Ã  un emprunt et que vous vous demandez si l'on peut changer d'assurance 
-                 de crÃ©dit et comment faire pour la remplacer, voici les rÃ©ponses Ã  toutes 
+                Lagarde, loi Hamon, loi Bourquin sur la résiliation annuelle. Si vous avez souscrit
+                 à  un emprunt et que vous vous demandez si l'on peut changer d'assurance 
+                 de crédit et comment faire pour la remplacer, voici les réponses à  toutes 
                  vos questions</p>
 				<button id="bouton_infos_ass" class="w3-button w3-theme-d3" onclick="" style="font-weight:900;">En savoir plus</button>                 
             </div>
@@ -61,9 +81,9 @@
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux faire un emprunt et j'ai besoin d'informations</h3><br>
                 <img alt="logo" src="img/logo-cheque.png" height="60px">
-                <p>Vous souhaitez rÃ©aliser un emprunt mais vous Ãªtes perdu dans les dÃ©marches Ã 
-                suivre? Voici les rÃ©ponses Ã  vos questions. Pour des informations plus adaptÃ©es 
-                Ã  votre parcours, n'hÃ©sitez pas Ã  vous inscrire.</p>
+                <p>Vous souhaitez réaliser un emprunt mais vous àªtes perdu dans les démarches à 
+                suivre? Voici les réponses à  vos questions. Pour des informations plus adaptées 
+                à  votre parcours, n'hésitez pas à  vous inscrire.</p>
                 <button id="bouton_infos_cre" class="w3-button w3-theme-d3" onclick="" style="font-weight:900;">En savoir plus</button>                 
                 
             </div>
@@ -73,13 +93,13 @@
     <div class="w3-row-padding w3-center w3-margin-top">
         <div class="w3-row w3-border">
             <div class="w3-half w3-container w3-blue w3-border">
-                <h5>Ne ratez pas les actualitÃ©s de we moÃ«</h5>
-                <p>Inscrivez-vous Ã  la newsletter</p>
+                <h5>Ne ratez pas les actualités de we moë</h5>
+                <p>Inscrivez-vous à  la newsletter</p>
             </div>
             <div class="w3-half w3-container">
-                <form action="newsletter.jsp" method="GET">
+                <form method="GET">
                     <input name="mail" class="w3-input" type="text" placeholder="Adresse email" required>
-                    <input type="submit" value="Submit">
+                    <input type="submit" name="newsletter" class="w3-button w3-theme-d3" style="font-weight:900;" value="Valider">
                 </form>
             </div>
         </div>
@@ -94,7 +114,7 @@
     
     <div class="w3-row-padding">
         <div class="w3-half">
-        	<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;" onclick="window.location='creation_compte.jsp';">CrÃ©er un compte</button>
+        	<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;" onclick="window.location='creation_compte.jsp';">Créer un compte</button>
         </div>
         
         <div class="w3-half">
@@ -108,7 +128,7 @@
                     <input class="w3-input" type="password" required>
                     <label>Mot de passe</label>
                 </div>
-        		<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;"onclick="window.location='connexion.jsp';">Connexion</button>
+        		<button type="button" class="w3-button w3-theme-d3" style="font-weight:900;" onclick="window.location='connexion.jsp';">Connexion</button>
             </form>
             </div>
         </div>
@@ -117,7 +137,7 @@
     
     <hr>
     <div class="w3-center">
-        <h2>Les enjeux de we moÃ«</h2>
+        <h2>Les enjeux de we moë</h2>
     </div>
     
     <div class="w3-row-padding">
