@@ -61,25 +61,7 @@ if(request.getParameter("newsletter") != null){
       </div>
     </noscript>
 
-    <h1>
-    	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg"></a>
-    	<%
-    	if(session.getAttribute("connexion") != null){ %>
-        <button class="w3-btn w3-theme" onclick="move()" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</button>
-    	<%} %>
-    </h1>
-    
-    
-    <header class="w3-container w3-theme w3-padding" id="myHeader">
-        <div class="w3-center">
-          <h4>We moë, une innovation sociale.</h4>
-          <h4>Gaëdig Le Moing, co-fondatrice de we moë nous explique pourquoi elle s'est lancée dans cette aventure et nous partage son témoignage.</h4>
-            <div class="w3-padding-32">
-              <a href="https://www.facebook.com/ticketforchange/videos/1136535766478310/?hc_ref=ARR9BJ7PCWEd9Fk0W0IN4uXt4jMccNg3KYmq0LrZfW7PgmVKxSfrSQ44T32fLHJUBCI&pnref=story"><button class="w3-button w3-theme-d3" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button></a>
-            </div>
-          </div>
-          
-    </header>
+    <jsp:include page="header.jsp"></jsp:include>
     
     <div class="w3-row-padding w3-center w3-margin-top">
         <div class="w3-half">
@@ -212,17 +194,7 @@ if(request.getParameter("newsletter") != null){
     </div>
     <br>
 
-    
-    <!-- Footer -->
-    <footer class="w3-container w3-theme-dark w3-padding-16">
-        <h3>Pied de page</h3>
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
-            <span class="w3-text w3-theme-light w3-padding">Remonter en haut de la page</span>
-            <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
-                <i class="fa fa-chevron-circle-up"></i></span></a>
-        </div>
-    </footer>
-    
+	    <jsp:include page="footer.jsp"></jsp:include>
+	
   </body>
 </html>

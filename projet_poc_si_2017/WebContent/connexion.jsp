@@ -27,25 +27,8 @@
       </div>
     </noscript>
 
-    <h1>
-    	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg" href="index.html"></a>
-    </h1>
+    <jsp:include page="header.jsp"></jsp:include>
     
-    
-    <header class="w3-container w3-theme w3-padding" id="myHeader">
-        <div class="w3-center">
-          <h4>We moë, une innovation sociale.</h4>
-          <h4>Gaëdig Le Moing, co-fondatrice de we moë nous explique pourquoi elle s'est lancée dans cette aventure et nous partage son témoignage.</h4>
-            <div class="w3-padding-32">
-              <button class="w3-button w3-theme-d3" onclick="document.getElementById('id01').style.display='block'" style="font-weight:900;">Pour voir la vidéo, c'est par ici.</button>
-            </div>
-          </div>
-        <div>
-    </header>
-    
-
-    
-
     
     <hr>
     <h2 class="w3-center">Inscription ou connection</h2>
@@ -79,16 +62,8 @@
     <br>
 
     
-    <!-- Footer -->
-    <footer class="w3-container w3-theme-dark w3-padding-16">
-        <h3>Pied de page</h3>
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
-            <span class="w3-text w3-theme-light w3-padding">Remonter en haut de la page</span>
-            <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
-                <i class="fa fa-chevron-circle-up"></i></span></a>
-        </div>
-    </footer>
+        <jsp:include page="footer.jsp"></jsp:include>
+
     
   </body>
 </html>
