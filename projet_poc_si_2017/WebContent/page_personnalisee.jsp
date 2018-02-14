@@ -19,11 +19,13 @@
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
 <%
-BaseNeo4j greeter = new BaseNeo4j();
+	BaseNeo4j greeter = new BaseNeo4j();
 	Arbre a = greeter.creerArbre();
 	System.out.println(a.toString());
 
-String contenu = a.toString();
+	String contenu = a.toString();
+	String titre = "titre";
+	
 
 %>
   <body>
@@ -40,9 +42,8 @@ String contenu = a.toString();
     
     <hr>
     <div class="w3-row-padding">
-    	<h1 id="titre"></h1>
+    	<h1 id="titre"><%=titre%></h1>
     	<div id="contenu"><%=contenu%></div>
-	    <p id="contenu">Contenu informationnel</p>
     </div>
     
     <br>
