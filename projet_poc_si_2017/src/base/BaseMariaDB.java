@@ -100,7 +100,7 @@ public class BaseMariaDB {
 				reps.add(rep);
 			}
 			for (ReponsePersonne r : reps) {
-				String query2 = "select * from t_question_que WHERE QUE_id = ?";
+				String query2 = "select * from T_QUESTION_QUE WHERE QUE_id = ?";
 				java.sql.PreparedStatement preparedStmt2 = co.prepareStatement(query2);
 				preparedStmt2.setInt(1, r.getIdQuestion());
 				ResultSet rs2 = preparedStmt2.executeQuery();
