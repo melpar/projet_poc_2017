@@ -20,8 +20,13 @@ import bean.mongdb.HistoriqueConnexion;
 
 public class BaseMongoDB {
 
+	// Declaration des variable globale
 	private MongoClient mongoClient;
-	MongoDatabase db;
+	private MongoDatabase db;
+
+	/////////////////////////////////
+	// Test de la base
+	/////////////////////////////////
 
 	public static void main(String[] args) {
 		BaseMongoDB mongo = new BaseMongoDB();
@@ -31,51 +36,47 @@ public class BaseMongoDB {
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
 		// mongo.testUtilisateurParJour();
-		mongo.testUpdate();
-		mongo.visualiser();
+		// mongo.testUpdatePage();
+
+		// mongo.visualiser(mongo.requete(new Date(55, 10, 19, 13, 45, 60), new Date(55,
+		// 10, 21, 13, 45, 60)));
 		mongo.fermer();
 	}
 
-	public void test() {
+	void test() {
 		MongoDatabase dbtest = mongoClient.getDatabase("BDMongomaster041");
 		MongoCollection<Document> collection = dbtest.getCollection("oeuvres");
 		Document myDoc = collection.find().first();
 		System.out.println(myDoc);
 	}
 
-	public void testHistorique() {
-		HistoriqueConnexion connexion = new HistoriqueConnexion(43, 22, "Wind", "GG", new Date(55, 10, 22, 13, 45, 60));
+	void testHistorique() {
+		HistoriqueConnexion connexion = new HistoriqueConnexion(45, 22, "Wind", "GG", new Date(55, 10, 20, 13, 45, 60));
 		connexion.addPagesVisitées(new Date(55, 10, 22, 13, 50, 60), "maPage2");
 		Document document = genererDocument(connexion);
 		ajoutDocument(document);
 		// visualiser();
 	}
 
-	public void testDelete() {
+	void testDelete() {
 		removeConnexion(41);
 		visualiser();
 	}
 
-	public void testUtilisateurParPage() {
+	void testUtilisateurParPage() {
 		System.out.println(utilisateurParPage(requete()).toString());
 	}
 
-	public void testUtilisateurParJour() {
+	void testUtilisateurParJour() {
 		System.out.println(utilisateurParJour(requete()).toString());
 	}
 
-	public void testUpdate() {
+	void testUpdateDeconnexion() {
 		updateConnexion(42, (new Date(55, 10, 24, 13, 50, 60)));
 	}
 
-	public void ouvrir() {
-		MongoClientURI uri = new MongoClientURI("mongodb://obiwan2.univ-brest.fr");
-		mongoClient = new MongoClient(uri);
-		db = mongoClient.getDatabase("BDMongomasterProjet041");
-	}
-
-	public void fermer() {
-		mongoClient.close();
+	void testUpdatePage() {
+		updateConnexion(45, new Date(55, 10, 24, 13, 50, 60), "maPage3");
 	}
 
 	void visualiser() {
@@ -98,6 +99,20 @@ public class BaseMongoDB {
 		}
 	}
 
+	/////////////////////////////////
+	// Communication avec la base MongoDB
+	/////////////////////////////////
+
+	public void ouvrir() {
+		MongoClientURI uri = new MongoClientURI("mongodb://obiwan2.univ-brest.fr");
+		mongoClient = new MongoClient(uri);
+		db = mongoClient.getDatabase("BDMongomasterProjet041");
+	}
+
+	public void fermer() {
+		mongoClient.close();
+	}
+
 	FindIterable<Document> requete() {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find();
@@ -105,7 +120,7 @@ public class BaseMongoDB {
 
 	FindIterable<Document> requete(Date debut, Date fin) {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
-		return coll.find();
+		return coll.find(Filters.and(Filters.gte("dateConnexion", debut), Filters.lte("dateConnexion", fin)));
 	}
 
 	Document requete(int idConnexion) {
@@ -129,6 +144,10 @@ public class BaseMongoDB {
 		coll.deleteMany(document);
 	}
 
+	/////////////////////////////////
+	// Modification des connexion existante dans la base
+	/////////////////////////////////
+
 	public void updateConnexion(Integer idConnexion, Date dateDeconnexion) {
 		Document document = requete(idConnexion);
 		HistoriqueConnexion connexion = genererConnexion(document);
@@ -136,6 +155,18 @@ public class BaseMongoDB {
 		Document documentUpdate = genererDocument(connexion);
 		updateDocument(idConnexion, documentUpdate);
 	}
+
+	public void updateConnexion(Integer idConnexion, Date date, String url) {
+		Document document = requete(idConnexion);
+		HistoriqueConnexion connexion = genererConnexion(document);
+		connexion.addPagesVisitées(date, url);
+		Document documentUpdate = genererDocument(connexion);
+		updateDocument(idConnexion, documentUpdate);
+	}
+
+	/////////////////////////////////
+	// Recherche des statistiques
+	/////////////////////////////////
 
 	public Map<String, Integer> utilisateurParPage(FindIterable<Document> list) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
@@ -173,6 +204,10 @@ public class BaseMongoDB {
 		return result;
 	}
 
+	/////////////////////////////////
+	// Conversion du type
+	/////////////////////////////////
+
 	Document genererDocument(HistoriqueConnexion connexion) {
 		Document document = new Document();
 		document.append("idConnexion", connexion.getIdConnexion());
@@ -192,7 +227,7 @@ public class BaseMongoDB {
 		return document;
 	}
 
-	public HistoriqueConnexion genererConnexion(Document document) {
+	HistoriqueConnexion genererConnexion(Document document) {
 		int idConnexion = Integer.valueOf(document.getDouble("idConnexion").intValue());
 		int idUtilisateur = Integer.valueOf(document.getDouble("idUtilisateur").intValue());
 		String systeme = document.getString("systeme");
