@@ -6,9 +6,21 @@ import java.util.List;
 public class Risque {
 	private String nom;
 	private List<Projet> projets;
+	private long id;
 
 	public Risque() {
 		this.projets = new ArrayList<Projet>();
+	}
+
+	public String toString() {
+		String ret = "";
+		ret += "	" + id + " " + nom;
+		ret += "\n";
+		for (Projet p : projets) {
+			ret += p.toString();
+			ret += "\n";
+		}
+		return ret;
 	}
 
 	public String getNom() {
@@ -30,5 +42,13 @@ public class Risque {
 
 	public void setProjets(List<Projet> projets) {
 		this.projets = projets;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

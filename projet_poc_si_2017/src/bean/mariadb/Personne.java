@@ -1,6 +1,8 @@
 package bean.mariadb;
 
-import annotation.Id;
+import java.util.HashMap;
+import java.util.Map;
+
 import annotation.Table;
 
 @Table(name = "T_PERSONNE_PER")
@@ -10,8 +12,12 @@ public class Personne {
 	private String per_prenom;
 	private boolean per_risque;
 
-	@Id
-	private String per_id;
+	private Connexion connexion;
+	private Map<Question, ReponsePersonne> reponses;
+
+	public Personne() {
+		this.reponses = new HashMap<>();
+	}
 
 	public String getPer_nom() {
 		return per_nom;
@@ -37,11 +43,20 @@ public class Personne {
 		per_risque = pER_risque;
 	}
 
-	public String getPer_id() {
-		return per_id;
+	public Connexion getConnexion() {
+		return connexion;
 	}
 
-	public void setPer_id(String pER_id) {
-		per_id = pER_id;
+	public void setConnexion(Connexion connexion) {
+		this.connexion = connexion;
 	}
+
+	public Map<Question, ReponsePersonne> getReponses() {
+		return reponses;
+	}
+
+	public void setReponses(Map<Question, ReponsePersonne> reponses) {
+		this.reponses = reponses;
+	}
+
 }

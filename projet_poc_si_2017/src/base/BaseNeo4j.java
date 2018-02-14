@@ -41,9 +41,10 @@ public class BaseNeo4j implements AutoCloseable {
 				Value nom = noeud.get("nom");
 				Risque risque = new Risque();
 				risque.setNom(nom.asString());
-
+				Long id = noeud.id();
+				risque.setId(id);
 				// Projet
-				risque.addAll(getProjet(nom.asString()));
+				risque.addAll(getProjet(id));
 
 				risques.add(risque);
 			}
@@ -51,11 +52,11 @@ public class BaseNeo4j implements AutoCloseable {
 		return risques;
 	}
 
-	private List<Projet> getProjet(String nomRisque) {
+	private List<Projet> getProjet(long idRisque) {
 		List<Projet> projets = new ArrayList<Projet>();
 		try (Session session = driver.session()) {
 			final StatementResult sr = session
-					.run("MATCH (r:MP_Risque{nom:\"" + nomRisque + "\"})-[MP:MP_SOUHAITE]->(p:MP_PROJET) RETURN p");
+					.run("MATCH (r:MP_Risque)-[MP:MP_SOUHAITE]->(p:MP_PROJET) WHERE id(r)=" + idRisque + " RETURN p");
 
 			while (sr.hasNext()) {
 				Record ligne = sr.next();
@@ -64,9 +65,10 @@ public class BaseNeo4j implements AutoCloseable {
 				Value nom = noeud.get("nom");
 				Projet projet = new Projet();
 				projet.setNom(nom.asString());
-
+				double id = noeud.id();
+				projet.setId(id);
 				// Avance
-				projet.addAll(getAvances(nom.asString()));
+				projet.addAll(getAvances(id));
 				projets.add(projet);
 			}
 
@@ -74,11 +76,11 @@ public class BaseNeo4j implements AutoCloseable {
 		return projets;
 	}
 
-	private List<Avance> getAvances(String nomProjet) {
+	private List<Avance> getAvances(double idProjet) {
 		List<Avance> avances = new ArrayList<Avance>();
 		try (Session session = driver.session()) {
 			final StatementResult sr = session
-					.run("MATCH (r:MP_PROJET{nom:\"" + nomProjet + "\"})-[MP_A_ETAT_DE]->(a:MP_AVANCE) RETURN a");
+					.run("MATCH (r:MP_PROJET)-[MP_A_ETAT_DE]->(a:MP_AVANCE) WHERE id(r)=" + idProjet + " RETURN a");
 
 			while (sr.hasNext()) {
 				Record ligne = sr.next();
@@ -87,9 +89,10 @@ public class BaseNeo4j implements AutoCloseable {
 				Value nom = noeud.get("nom");
 				Avance avance = new Avance();
 				avance.setNom(nom.asString());
-
+				double id = noeud.id();
+				avance.setId(id);
 				// Terme
-				avance.addAll(getTerme(nom.asString()));
+				avance.addAll(getTerme(id));
 				avances.add(avance);
 			}
 
@@ -97,21 +100,21 @@ public class BaseNeo4j implements AutoCloseable {
 		return avances;
 	}
 
-	private List<Terme> getTerme(String nomAvance) {
+	private List<Terme> getTerme(double idAvance) {
 		List<Terme> termes = new ArrayList<Terme>();
 		try (Session session = driver.session()) {
 			final StatementResult sr = session
-					.run("MATCH (r:MP_AVANCE{nom:\"" + nomAvance + "\"})-[MP_DANS]->(t:MP_TERME) RETURN t");
+					.run("MATCH (r:MP_AVANCE)-[MP_DANS]->(t:MP_TERME) WHERE id(r)=" + idAvance + " RETURN t");
 
 			while (sr.hasNext()) {
-				System.out.println(nomAvance);
 				Record ligne = sr.next();
 				Value colonneR = ligne.get("t");
 				Node noeud = colonneR.asNode();
 				Value nom = noeud.get("nom");
 				Terme terme = new Terme();
 				terme.setNom(nom.asString());
-
+				double id = noeud.id();
+				terme.setId(id);
 				termes.add(terme);
 			}
 
@@ -127,7 +130,8 @@ public class BaseNeo4j implements AutoCloseable {
 
 	public static void main(String... args) throws Exception {
 		try (BaseNeo4j greeter = new BaseNeo4j()) {
-			greeter.getRisques();
+			Arbre a = greeter.creerArbre();
+			System.out.println(a.toString());
 		}
 	}
 }

@@ -5,9 +5,20 @@ import java.util.List;
 
 public class Arbre {
 	private List<Risque> risques;
-	
-	public Arbre (){
+	private int id;
+
+	public Arbre() {
 		this.risques = new ArrayList<>();
+	}
+
+	public String toString() {
+		String ret = "";
+		ret += id;
+		ret += "\n";
+		for (Risque r : risques) {
+			ret += r.toString();
+		}
+		return ret;
 	}
 
 	public List<Risque> getRisques() {
@@ -20,5 +31,13 @@ public class Arbre {
 
 	public void addAll(List<Risque> risques2) {
 		this.risques.addAll(risques2);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

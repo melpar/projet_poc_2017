@@ -12,9 +12,16 @@ public class TestMariaDB {
 		b.ouvrir();
 		List<Personne> personnes = b.getPersonnes();
 		for (Personne p : personnes) {
-			System.out.println(p.getPer_id() + " " + p.getPer_nom() + " " + p.getPer_prenom() + " " + p.isPer_risque());
+			System.out.println(p.getPer_nom() + " " + p.getPer_prenom() + " " + p.isPer_risque());
 		}
+		b.fermer();
+		b.ouvrir();
+		Personne p = b.getPersonne("test@gmail.com");
 
+		System.out.println(p.getPer_nom() + " " + p.getPer_prenom() + " " + p.isPer_risque());
+		p.getReponses();
+
+		b.fermer();
 	}
 
 }
