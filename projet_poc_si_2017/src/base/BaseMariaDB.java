@@ -252,6 +252,30 @@ public class BaseMariaDB {
 
 	}
 
+	public boolean inscription(Connexion con, Personne per, List<ReponsePersonne> rep) {
+		try {
+			int rs;
+			String query = "INSERT INTO `T_CONNEXION_CON` (`CON_idMail`, `CON_motDePasse`) VALUES (?, ?)";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, con.getCon_idMail());
+			Cryptage c = new Cryptage(con.getCon_motDePasse());
+			preparedStmt.setString(2, c.chiffrer());
+			rs = preparedStmt.executeUpdate();
+			if (preparedStmt != null) {
+				preparedStmt.close();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
 	public boolean ajouterNewsletter(String mail) {
 		ResultSet rs;
 		PreparedStatement st;

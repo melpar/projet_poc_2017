@@ -1,11 +1,14 @@
 package test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import base.BaseMariaDB;
+import bean.mariadb.Connexion;
 import bean.mariadb.Formulaire;
 import bean.mariadb.Personne;
 import bean.mariadb.Question;
+import bean.mariadb.ReponsePersonne;
 import bean.mariadb.ReponseQuestion;
 
 public class TestMariaDB {
@@ -33,6 +36,14 @@ public class TestMariaDB {
 				System.out.println(liste_reponse.get(y).getReq_texte());
 			}
 		}
+
+		Connexion c = new Connexion();
+		c.setCon_idMail("testAjout@hotmail.fr");
+		c.setCon_motDePasse("userTest");
+		Personne personne = new Personne();
+		List<ReponsePersonne> liste_reponse_personne = new ArrayList<ReponsePersonne>();
+
+		b.inscription(c, personne, liste_reponse_personne);
 
 		b.fermer();
 	}
