@@ -1,5 +1,7 @@
 <!doctype html>
-
+<%@page import="org.bson.Document"%>
+<%@page import="base.BaseNeo4j"%>
+<%@page import="bean.neo4j.Arbre"%>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -16,7 +18,14 @@
     
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
+<%
+BaseNeo4j greeter = new BaseNeo4j();
+	Arbre a = greeter.creerArbre();
+	System.out.println(a.toString());
 
+String contenu = a.toString();
+
+%>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -29,11 +38,15 @@
 
     <jsp:include page="header.jsp"></jsp:include>
     
+    <hr>
+    <div class="w3-row-padding">
+    	<h1 id="titre"></h1>
+    	<div id="contenu"><%=contenu%></div>
+	    <p id="contenu">Contenu informationnel</p>
+    </div>
     
-    <div></div>
-
     <br>
-
+	<hr>
     
         <jsp:include page="footer.jsp"></jsp:include>
 
