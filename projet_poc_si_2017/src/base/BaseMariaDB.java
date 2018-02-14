@@ -14,9 +14,11 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import bean.mariadb.Connexion;
+import bean.mariadb.Formulaire;
 import bean.mariadb.Personne;
 import bean.mariadb.Question;
 import bean.mariadb.ReponsePersonne;
+import util.Cryptage;
 
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";
@@ -175,14 +177,59 @@ public class BaseMariaDB {
 
 	}
 
+	public Formulaire getFormulaire() {
+		Formulaire formulaire = new Formulaire();
+
+		ResultSet rs;
+		Statement st;
+		try {
+			st = (Statement) co.createStatement();
+			rs = (ResultSet) st.executeQuery("select * from T_QUESTION_QUE");
+			while (rs.next()) {
+				Question q = new Question();
+				q.setQue_question(rs.getString("QUE_question"));
+				q.setQue_id(rs.getInt("QUE_id"));
+				q.setQue_typeMultiple(rs.getBoolean("QUE_typeMultiple"));
+				if (q.isQue_typeMultiple() == true) {
+					Statement st2 = (Statement) co.createStatement();
+					ResultSet rs2 = (ResultSet) st2.executeQuery(
+							"select * from  T_REPONSEQUESTION_REQ WHERE REQ_idQuestion=\'" + q.getQue_id() + '\'');
+					while (rs2.next()) {
+						q.ajouterReponse(rs2.getString("REQ_reponse"));
+					}
+					if (st2 != null) {
+						st2.close();
+						if (rs2 != null) {
+							rs2.close();
+						}
+					}
+				} else {
+					q.ajouterReponse("oui");
+					q.ajouterReponse("non");
+				}
+				formulaire.ajouterQuestion(q);
+			}
+			if (st != null) {
+				st.close();
+				if (rs != null) {
+					rs.close();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return formulaire;
+	}
+
 	public boolean connexion(String mail, String mdp) {
 		ResultSet rs;
 		try {
 			String query = "select * from T_CONNEXION_CON WHERE CON_idMail = ? AND CON_motDePasse = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
-			preparedStmt.setString(2, mdp);
-
+			Cryptage c = new Cryptage(mdp);
+			preparedStmt.setString(2, c.chiffrer());
 			rs = preparedStmt.executeQuery();
 			while (rs.next()) {
 				return true;
@@ -194,6 +241,9 @@ public class BaseMariaDB {
 				}
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

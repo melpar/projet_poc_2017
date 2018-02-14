@@ -24,7 +24,7 @@ public class Cryptage {
 	 *            Cle de chiffrement
 	 */
 
-	private Cryptage(String chaine) {
+	public Cryptage(String chaine) {
 		// TODO Auto-generated constructor stub
 		this.chaineIn = chaine;
 
@@ -46,7 +46,7 @@ public class Cryptage {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Cryptage c1 = new Cryptage("motDePasse");
+		Cryptage c1 = new Cryptage("user1mdp");
 		System.out.println(c1.chiffrer());
 
 	}

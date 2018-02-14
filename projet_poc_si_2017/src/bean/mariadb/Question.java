@@ -24,7 +24,9 @@ public class Question {
 	}
 
 	public void ajouterReponse(String texte) {
-		this.que_listeReponse.add(new ReponseQuestion(texte));
+		ReponseQuestion r = new ReponseQuestion();
+		r.setReq_texte(texte);
+		this.que_listeReponse.add(r);
 	}
 
 	public List<ReponseQuestion> getQue_listeReponse() {

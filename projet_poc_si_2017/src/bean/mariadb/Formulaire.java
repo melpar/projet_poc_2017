@@ -11,4 +11,12 @@ public class Formulaire {
 		this.listeQuesstion = new ArrayList<Question>();
 	}
 
+	public void ajouterQuestion(Question q) {
+		this.listeQuesstion.add(q);
+	}
+
+	public List<Question> getListeQuesstion() {
+		return listeQuesstion;
+	}
+
 }
