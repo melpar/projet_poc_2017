@@ -4,14 +4,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
+import bean.mariadb.Connexion;
 import bean.mariadb.Personne;
+import bean.mariadb.Question;
+import bean.mariadb.ReponsePersonne;
 
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";
@@ -56,6 +61,91 @@ public class BaseMariaDB {
 		}
 	}
 
+	public Connexion getConnexion(String mail) {
+		Connexion connexion = new Connexion();
+		ResultSet rs;
+		try {
+			String query = "select * from T_CONNEXION_CON WHERE CON_idMail = ?";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+
+			rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				connexion.setCon_idMail(mail);
+				connexion.setCon_motDePasse(rs.getString("CON_motDePasse"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return connexion;
+	}
+
+	public Map<Question, ReponsePersonne> getReponsesPersonne(String mail) {
+		Map<Question, ReponsePersonne> reponses = new HashMap<>();
+		ResultSet rs;
+		try {
+			String query = "select * from t_reponsepersonne_rep WHERE REP_idMail = ?";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+
+			rs = preparedStmt.executeQuery();
+			List<ReponsePersonne> reps = new ArrayList<>();
+			while (rs.next()) {
+				ReponsePersonne rep = new ReponsePersonne();
+				rep.setIdQuestion(rs.getInt("REP_idQuestion"));
+				rep.setValeur(rs.getString("REP_reponse"));
+
+				reps.add(rep);
+			}
+			for (ReponsePersonne r : reps) {
+				String query2 = "select * from t_question_que WHERE QUE_id = ?";
+				java.sql.PreparedStatement preparedStmt2 = co.prepareStatement(query2);
+				preparedStmt2.setInt(1, r.getIdQuestion());
+				ResultSet rs2 = preparedStmt2.executeQuery();
+				Question question = new Question();
+				while (rs2.next()) {
+					question.setQue_id(r.getIdQuestion());
+					question.setQue_question(rs2.getString("QUE_question"));
+				}
+				reponses.put(question, r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return reponses;
+	}
+
+	public Personne getPersonne(String mail) {
+		Personne personne = new Personne();
+		ResultSet rs;
+		Statement st;
+		try {
+			st = (Statement) co.createStatement();
+			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
+			while (rs.next()) {
+				personne.setPer_nom(rs.getString("PER_nom"));
+				personne.setPer_prenom(rs.getString("PER_prenom"));
+				personne.setPer_risque(rs.getBoolean("PER_risque"));
+				personne.setConnexion(getConnexion(mail));
+				personne.setReponses(getReponsesPersonne(mail));
+			}
+			if (st != null) {
+				st.close();
+				if (rs != null) {
+					rs.close();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return personne;
+	}
+
 	public List<Personne> getPersonnes() {
 		List<Personne> personnes = new ArrayList<>();
 		ResultSet rs;
@@ -65,7 +155,6 @@ public class BaseMariaDB {
 			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
 			while (rs.next()) {
 				Personne p = new Personne();
-				p.setPer_id(rs.getString("PER_id"));
 				p.setPer_nom(rs.getString("PER_nom"));
 				p.setPer_prenom(rs.getString("PER_prenom"));
 				p.setPer_risque(rs.getBoolean("PER_risque"));
