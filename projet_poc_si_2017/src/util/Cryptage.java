@@ -1,6 +1,7 @@
 package util;
 
 import java.security.Key;
+import java.util.ResourceBundle;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -12,6 +13,7 @@ public class Cryptage {
 	private String chaineIn;
 	private String algo;
 	private byte[] cle;
+	private static String config = "resources/cleDeChiffrement";
 
 	/**
 	 * chriffrage d'une chaine de caractere
@@ -22,11 +24,13 @@ public class Cryptage {
 	 *            Cle de chiffrement
 	 */
 
-	private Cryptage(String chaine, String cle) {
+	private Cryptage(String chaine) {
 		// TODO Auto-generated constructor stub
 		this.chaineIn = chaine;
-		this.cle = cle.getBytes();
-		this.algo = "AES";
+
+		ResourceBundle resource = ResourceBundle.getBundle(config);
+		this.cle = resource.getString("cleDeChiffrement").getBytes();
+		this.algo = resource.getString("algorithme");
 	}
 
 	public String chiffrer() throws Exception {
@@ -42,7 +46,7 @@ public class Cryptage {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Cryptage c1 = new Cryptage("motDePasse", "abc123deaoezdf77");
+		Cryptage c1 = new Cryptage("motDePasse");
 		System.out.println(c1.chiffrer());
 
 	}

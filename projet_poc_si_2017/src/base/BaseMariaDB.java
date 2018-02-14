@@ -86,7 +86,7 @@ public class BaseMariaDB {
 		Map<Question, ReponsePersonne> reponses = new HashMap<>();
 		ResultSet rs;
 		try {
-			String query = "select * from t_reponsepersonne_rep WHERE REP_idMail = ?";
+			String query = "select * from T_REPONSEPERSONNE_REP WHERE REP_idMail = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
 
