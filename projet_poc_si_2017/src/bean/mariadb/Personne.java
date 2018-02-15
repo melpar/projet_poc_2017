@@ -51,8 +51,8 @@ public class Personne {
 		this.connexion = connexion;
 	}
 
-	public Map<Question, ReponsePersonne> getReponses() {
-		return reponses;
+	public HashMap<Question, ReponsePersonne> getReponses() {
+		return (HashMap) reponses;
 	}
 
 	public void setReponses(Map<Question, ReponsePersonne> reponses) {

@@ -111,6 +111,7 @@ public class BaseMariaDB {
 		HashMap<Question, ReponsePersonne> reponses = new HashMap<>();
 		ResultSet rs;
 		try {
+			System.out.println("try " + mail);
 			String query = "select * from T_REPONSEPERSONNE_REP WHERE REP_idMail = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
@@ -118,6 +119,7 @@ public class BaseMariaDB {
 			rs = preparedStmt.executeQuery();
 			List<ReponsePersonne> reps = new ArrayList<>();
 			while (rs.next()) {
+				System.out.println("rs.next");
 				ReponsePersonne rep = new ReponsePersonne();
 				rep.setIdQuestion(rs.getInt("REP_idQuestion"));
 				rep.setValeur(rs.getString("REP_reponse"));
@@ -125,6 +127,7 @@ public class BaseMariaDB {
 				reps.add(rep);
 			}
 			for (ReponsePersonne r : reps) {
+				System.out.println("for");
 				String query2 = "select * from T_QUESTION_QUE WHERE QUE_id = ?";
 				java.sql.PreparedStatement preparedStmt2 = co.prepareStatement(query2);
 				preparedStmt2.setInt(1, r.getIdQuestion());
@@ -146,19 +149,21 @@ public class BaseMariaDB {
 	public Personne getPersonne(String mail) {
 		Personne personne = new Personne();
 		ResultSet rs;
-		Statement st;
 		try {
-			st = (Statement) co.createStatement();
-			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
+			String query = "select * from T_PERSONNE_PER WHERE PER_id = ?";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+			rs = preparedStmt.executeQuery();
 			while (rs.next()) {
 				personne.setPer_nom(rs.getString("PER_nom"));
 				personne.setPer_prenom(rs.getString("PER_prenom"));
 				personne.setPer_risque(rs.getBoolean("PER_risque"));
 				personne.setConnexion(getConnexion(mail));
+				System.err.println("get personne");
 				personne.setReponses(getReponsesPersonne(mail));
 			}
-			if (st != null) {
-				st.close();
+			if (preparedStmt != null) {
+				preparedStmt.close();
 				if (rs != null) {
 					rs.close();
 				}
@@ -177,7 +182,7 @@ public class BaseMariaDB {
 		Statement st;
 		try {
 			st = (Statement) co.createStatement();
-			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
+			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER WHERE PER_id = ?");
 			while (rs.next()) {
 				Personne p = new Personne();
 				p.setPer_nom(rs.getString("PER_nom"));

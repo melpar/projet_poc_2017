@@ -1,13 +1,15 @@
 <!doctype html>
 
+<%@page import="bean.mariadb.Question"%>
 <%@page import="base.BaseMariaDB"%>
 <%@page import="javafx.scene.control.Alert"%>
 <%@page import="com.sun.glass.ui.Window"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:useBean id="personne" class="bean.mariadb.Personne" scope="request"></jsp:useBean>
-<jsp:useBean id="questions" class="java.util.ArrayList" scope="request"></jsp:useBean>
 <jsp:useBean id="questionnaire" class="java.util.HashMap"
+	scope="request"></jsp:useBean>
+<jsp:useBean id="questions" class="java.util.HashMap"
 	scope="request"></jsp:useBean>
 <html>
 <head>
@@ -35,6 +37,7 @@
 		String mail = request.getParameter("mail");
 		base.ajouterNewsletter(mail);
 		base.fermer();
+		
 %>
 
 <script>
@@ -60,20 +63,27 @@
 %>
 
 <%
-	String mail = request.getParameter("mail");
+	String mail = session.getAttribute("mail").toString();
 	BaseMariaDB base = new BaseMariaDB();
 	base.ouvrir();
 
 	personne = base.getPersonne(mail);
-	questionnaire = base.getReponsesPersonne(mail);
-	questions = base.getQuestions();
-
+	questionnaire = personne.getReponses(); 
 	System.out.println(questionnaire);
 
+	questions = new java.util.HashMap<String, String>();
+	
+	
+	java.util.Set<bean.mariadb.Question> cles = questionnaire.keySet();
+	java.util.Iterator<bean.mariadb.Question> it = cles.iterator();
+	while (it.hasNext()){
+	   bean.mariadb.Question cle= it.next(); // tu peux typer plus finement ici
+	   bean.mariadb.ReponsePersonne valeur = (bean.mariadb.ReponsePersonne)questionnaire.get(cle); // tu peux typer plus finement ici
+	   questions.put(cle.getQue_question(), valeur.getValeur());
+	}
 	request.setAttribute("personne", personne);
 	request.setAttribute("questionnaire", questionnaire);
 	request.setAttribute("questions", questions);
-
 	base.fermer();
 %>
 
@@ -112,31 +122,22 @@
 						<p>${personne.connexion.con_idMail}</p>
 					</li>
 				</ul>
-				<div class="w3-container w3-indigo w3-large">
-					<span class="w3-right">
-						<button class="w3-btn" style="font-weight: 900;">Modifier</button>
-					</span>
-				</div>
 			</div>
 		</div>
 
 		<div class="w3-half">
 			<div class="w3-card white">
 				<div class="w3-container w3-theme">
-					<h3>Liste des page conseiller par We-Moë :</h3>
+					<h3>Page conseillée par We-Moë :</h3>
 				</div>
 				<ul class="w3-ul w3-border-top">
 					<li>
 						<p>
-							1- <a href="https://www.w3schools.com/w3css/default.asp"
+							<a href="https://www.w3schools.com/w3css/default.asp"
 								target="_blank">w3.css</a>
 						</p>
 					</li>
 				</ul>
-				<div class="w3-container w3-theme w3-large">
-					<span class="w3-right"><button class="w3-btn"
-							style="font-weight: 900;">Modifier</button></span>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -151,15 +152,11 @@
 				<c:forEach items="${questions}" var="question">
 					<ul class="w3-ul w3-border-top">
 						<li>
-							<h3>${question}</h3>
-							<p>${questionnaire['${question}']}</p>
+							<h3>${question.key}</h3>
+							<p>${question.value}</p>
 						</li>
 					</ul>
-				</c:forEach>
-				<div class="w3-container w3-orange w3-large">
-					<span class="w3-right"><button class="w3-btn"
-							style="font-weight: 900;">Modifier</button></span>
-				</div>
+				</c:forEach> 
 			</div>
 		</div>
 	</div>
