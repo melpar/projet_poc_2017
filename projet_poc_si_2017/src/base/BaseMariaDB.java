@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.mysql.jdbc.Connection;
@@ -84,8 +83,32 @@ public class BaseMariaDB {
 		return connexion;
 	}
 
-	public Map<Question, ReponsePersonne> getReponsesPersonne(String mail) {
-		Map<Question, ReponsePersonne> reponses = new HashMap<>();
+	public ArrayList<String> getQuestions() {
+		ArrayList<String> questions = new ArrayList<>();
+		ResultSet rs;
+		Statement st;
+		try {
+			st = (Statement) co.createStatement();
+			rs = (ResultSet) st.executeQuery("SELECT * FROM `T_QUESTION_QUE`");
+			while (rs.next()) {
+				questions.add(rs.getString("QUE_question"));
+			}
+			if (st != null) {
+				st.close();
+				if (rs != null) {
+					rs.close();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return questions;
+	}
+
+	public HashMap<Question, ReponsePersonne> getReponsesPersonne(String mail) {
+		HashMap<Question, ReponsePersonne> reponses = new HashMap<>();
 		ResultSet rs;
 		try {
 			String query = "select * from T_REPONSEPERSONNE_REP WHERE REP_idMail = ?";
