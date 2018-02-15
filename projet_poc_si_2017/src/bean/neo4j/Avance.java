@@ -7,6 +7,7 @@ public class Avance {
 	private String nom;
 	private List<Terme> termes;
 	private double id;
+	private String titre;
 
 	public Avance() {
 		this.termes = new ArrayList<Terme>();

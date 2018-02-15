@@ -7,6 +7,11 @@ public class Projet {
 	private String nom;
 	private List<Avance> avances;
 	private double id;
+	private String titre;
+	private String contenu;
+	private boolean kit;
+	private boolean listeDiffusion;
+	private boolean accesContrat;
 
 	public String toString() {
 		String ret = "";
@@ -47,6 +52,46 @@ public class Projet {
 
 	public void setId(double id) {
 		this.id = id;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getContenu() {
+		return contenu;
+	}
+
+	public void setContenu(String contenu) {
+		this.contenu = contenu;
+	}
+
+	public boolean isKit() {
+		return kit;
+	}
+
+	public void setKit(boolean kit) {
+		this.kit = kit;
+	}
+
+	public boolean isListeDiffusion() {
+		return listeDiffusion;
+	}
+
+	public void setListeDiffusion(boolean listeDiffusion) {
+		this.listeDiffusion = listeDiffusion;
+	}
+
+	public boolean isAccesContrat() {
+		return accesContrat;
+	}
+
+	public void setAccesContrat(boolean accesContrat) {
+		this.accesContrat = accesContrat;
 	}
 
 }
