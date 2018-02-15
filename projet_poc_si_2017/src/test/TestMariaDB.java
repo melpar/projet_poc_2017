@@ -41,9 +41,18 @@ public class TestMariaDB {
 		c.setCon_idMail("testAjout@hotmail.fr");
 		c.setCon_motDePasse("userTest");
 		Personne personne = new Personne();
-		List<ReponsePersonne> liste_reponse_personne = new ArrayList<ReponsePersonne>();
+		personne.setPer_nom("ok");
+		personne.setPer_prenom("Google");
+		personne.setConnexion(c);
 
-		b.inscription(c, personne, liste_reponse_personne);
+		List<ReponsePersonne> liste_reponse_personne = new ArrayList<ReponsePersonne>();
+		for (int i = 0; i < 10; i++) {
+			liste_reponse_personne.add(new ReponsePersonne());
+			liste_reponse_personne.get(i).setIdQuestion(2);
+			liste_reponse_personne.get(i).setValeur("test " + i);
+		}
+
+		b.inscription(personne, liste_reponse_personne);
 
 		b.fermer();
 	}

@@ -150,7 +150,7 @@ public class BaseMariaDB {
 		Personne personne = new Personne();
 		ResultSet rs;
 		try {
-			String query = "select * from T_PERSONNE_PER WHERE PER_id = ?";
+			String query = "select * from T_PERSONNE_PER WHERE PER_idMail = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
 			rs = preparedStmt.executeQuery();
@@ -182,7 +182,7 @@ public class BaseMariaDB {
 		Statement st;
 		try {
 			st = (Statement) co.createStatement();
-			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER WHERE PER_id = ?");
+			rs = (ResultSet) st.executeQuery("select * from T_PERSONNE_PER");
 			while (rs.next()) {
 				Personne p = new Personne();
 				p.setPer_nom(rs.getString("PER_nom"));
@@ -280,7 +280,7 @@ public class BaseMariaDB {
 
 	}
 
-	public boolean inscription(Connexion con, Personne per, List<ReponsePersonne> rep) {
+	private boolean ajouterCon(Connexion con) {
 		try {
 			int rs;
 			String query = "INSERT INTO `T_CONNEXION_CON` (`CON_idMail`, `CON_motDePasse`) VALUES (?, ?)";
@@ -299,6 +299,69 @@ public class BaseMariaDB {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		return true;
+	}
+
+	private boolean ajouterPer(Personne per) {
+		try {
+			int rs;
+			String query = "INSERT INTO `T_PERSONNE_PER` (`PER_nom`, `PER_prenom`, `PER_risque`, `PER_idMail`) VALUES (?, ?, ?, ?)";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, per.getPer_nom());
+			preparedStmt.setString(2, per.getPer_prenom());
+			preparedStmt.setBoolean(3, per.isPer_risque());
+			preparedStmt.setString(4, per.getConnexion().getCon_idMail());
+			rs = preparedStmt.executeUpdate();
+			if (preparedStmt != null) {
+				preparedStmt.close();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean ajouterRep(String idMail, ReponsePersonne rep) {
+		try {
+			int rs;
+			String query = "INSERT INTO `T_REPONSEPERSONNE_REP` (`REP_id`, `REP_idQuestion`, `REP_idMail`, `REP_reponse`) VALUES (NULL, ?, ?, ?)";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setInt(1, rep.getIdQuestion());
+			preparedStmt.setString(2, idMail);
+			preparedStmt.setString(3, rep.getValeur());
+			rs = preparedStmt.executeUpdate();
+			if (preparedStmt != null) {
+				preparedStmt.close();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean inscription(Personne per, List<ReponsePersonne> rep) {
+		this.ajouterCon(per.getConnexion());
+		this.ajouterPer(per);
+		for (int i = 0; i < rep.size(); i++) {
+			this.ajouterRep(per.getConnexion().getCon_idMail(), rep.get(i));
 		}
 
 		return true;
