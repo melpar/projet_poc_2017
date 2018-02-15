@@ -11,6 +11,16 @@ public class Arbre {
 		this.risques = new ArrayList<>();
 	}
 
+	public Risque getRisque(String nom) {
+		Risque r = null;
+		for (Risque risque : risques) {
+			if (risque.getNom().equals(nom)) {
+				return risque;
+			}
+		}
+		return r;
+	}
+
 	public String toString() {
 		String ret = "";
 		ret += id;
@@ -40,4 +50,5 @@ public class Arbre {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 }

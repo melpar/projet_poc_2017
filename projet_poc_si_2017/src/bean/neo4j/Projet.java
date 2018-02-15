@@ -9,9 +9,18 @@ public class Projet {
 	private double id;
 	private String titre;
 	private String contenu;
-	private boolean kit;
+	private String kit;
 	private boolean listeDiffusion;
 	private boolean accesContrat;
+
+	public Avance getAvance(String nom) {
+		for (Avance av : avances) {
+			if (av.getNom().equals(nom)) {
+				return av;
+			}
+		}
+		return null;
+	}
 
 	public String toString() {
 		String ret = "";
@@ -70,11 +79,11 @@ public class Projet {
 		this.contenu = contenu;
 	}
 
-	public boolean isKit() {
+	public String getKit() {
 		return kit;
 	}
 
-	public void setKit(boolean kit) {
+	public void setKit(String kit) {
 		this.kit = kit;
 	}
 

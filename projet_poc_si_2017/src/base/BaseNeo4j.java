@@ -65,6 +65,10 @@ public class BaseNeo4j implements AutoCloseable {
 				Value nom = noeud.get("nom");
 				Projet projet = new Projet();
 				projet.setNom(nom.asString());
+				projet.setContenu(noeud.get("contenu").asString());
+				projet.setKit(noeud.get("kit").asString());
+				projet.setListeDiffusion(false);
+				projet.setTitre(noeud.get("titre").asString());
 				double id = noeud.id();
 				projet.setId(id);
 				// Avance

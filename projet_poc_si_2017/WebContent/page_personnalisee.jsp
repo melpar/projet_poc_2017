@@ -19,15 +19,20 @@
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
 <%
-	BaseNeo4j greeter = new BaseNeo4j();
-	Arbre a = greeter.creerArbre();
-	System.out.println(a.toString());
 
-	String contenu = a.toString();
-	String titre = "titre";
+	bean.neo4j.Noeud noeud = util.PagePersonnaliseeUtil.getNoeud(session.getAttribute("mail").toString());
+	String contenu = noeud.getContenu();
+	String titre = noeud.getTitre();
+	String nom = noeud.getNom();
+	String kit = noeud.getKit();
+	boolean diffusion = noeud.isDiffusion();
+	boolean contrat = noeud.isContrat();
+	boolean relance = noeud.isRelance();
 	
 
 %>
+
+<title><%=nom%></title>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -39,11 +44,14 @@
     </noscript>
 
     <jsp:include page="header.jsp"></jsp:include>
-    
     <hr>
     <div class="w3-row-padding">
-    	<h1 id="titre"><%=titre%></h1>
+    	<h1 id="non"><%=titre%></h1>
     	<div id="contenu"><%=contenu%></div>
+		<div id="contenu"><%=kit%></div>
+		<div id="contenu"><%=diffusion%></div>
+		<div id="contenu"><%=contrat%></div>
+		<div id="contenu"><%=relance%></div>
     </div>
     
     <br>

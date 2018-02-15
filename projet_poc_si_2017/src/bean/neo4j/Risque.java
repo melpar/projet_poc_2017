@@ -12,6 +12,16 @@ public class Risque {
 		this.projets = new ArrayList<Projet>();
 	}
 
+	public Projet getProjet(String nom) {
+		Projet projet = null;
+		for (Projet p : projets) {
+			if (p.getNom().equals(nom)) {
+				return p;
+			}
+		}
+		return projet;
+	}
+
 	public String toString() {
 		String ret = "";
 		ret += "	" + id + " " + nom;

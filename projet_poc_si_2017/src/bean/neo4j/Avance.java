@@ -8,9 +8,20 @@ public class Avance {
 	private List<Terme> termes;
 	private double id;
 	private String titre;
+	private String contenu;
 
 	public Avance() {
 		this.termes = new ArrayList<Terme>();
+	}
+
+	public Terme getTerme(boolean isLongTerme) {
+		String nom = isLongTerme ? "moyenLongTerme" : "courtTerme";
+		for (Terme terme : termes) {
+			if (terme.getNom().equals(nom)) {
+				return terme;
+			}
+		}
+		return null;
 	}
 
 	public String toString() {
@@ -42,6 +53,26 @@ public class Avance {
 
 	public void setId(double id) {
 		this.id = id;
+	}
+
+	public List<Terme> getTermes() {
+		return termes;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getContenu() {
+		return contenu;
+	}
+
+	public void setContenu(String contenu) {
+		this.contenu = contenu;
 	}
 
 }
