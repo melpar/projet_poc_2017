@@ -150,7 +150,7 @@ public class BaseMariaDB {
 		Personne personne = new Personne();
 		ResultSet rs;
 		try {
-			String query = "select * from T_PERSONNE_PER WHERE PER_idMail = ?";
+			String query = "select * from T_PERSONNE_PER WHERE PER_id = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
 			rs = preparedStmt.executeQuery();
@@ -296,9 +296,11 @@ public class BaseMariaDB {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 		return true;
@@ -358,10 +360,17 @@ public class BaseMariaDB {
 	}
 
 	public boolean inscription(Personne per, List<ReponsePersonne> rep) {
-		this.ajouterCon(per.getConnexion());
-		this.ajouterPer(per);
+		if (this.ajouterCon(per.getConnexion()) != true) {
+			return false;
+		}
+
+		if (this.ajouterPer(per) != true) {
+			return false;
+		}
 		for (int i = 0; i < rep.size(); i++) {
-			this.ajouterRep(per.getConnexion().getCon_idMail(), rep.get(i));
+			if (this.ajouterRep(per.getConnexion().getCon_idMail(), rep.get(i)) != true) {
+				return false;
+			}
 		}
 
 		return true;

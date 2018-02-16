@@ -20,7 +20,7 @@ import bean.mongdb.HistoriqueConnexion;
 
 public class BaseMongoDB {
 
-	// Declaration des variable globale
+	// Declaration des variables globales
 	private MongoClient mongoClient;
 	private MongoDatabase db;
 
@@ -41,13 +41,6 @@ public class BaseMongoDB {
 		// mongo.visualiser(mongo.requete(new Date(55, 10, 19, 13, 45, 60), new Date(55,
 		// 10, 21, 13, 45, 60)));
 		mongo.fermer();
-	}
-
-	void test() {
-		MongoDatabase dbtest = mongoClient.getDatabase("BDMongomaster041");
-		MongoCollection<Document> collection = dbtest.getCollection("oeuvres");
-		Document myDoc = collection.find().first();
-		System.out.println(myDoc);
 	}
 
 	void testHistorique() {
@@ -103,41 +96,81 @@ public class BaseMongoDB {
 	// Communication avec la base MongoDB
 	/////////////////////////////////
 
+	/**
+	 * Création d'une connexion avec la base de donnée.
+	 */
 	public void ouvrir() {
 		MongoClientURI uri = new MongoClientURI("mongodb://obiwan2.univ-brest.fr");
 		mongoClient = new MongoClient(uri);
 		db = mongoClient.getDatabase("BDMongomasterProjet041");
 	}
 
+	/**
+	 * fermeture de la connexion avec la base de donnée.
+	 */
 	public void fermer() {
 		mongoClient.close();
 	}
 
+	/**
+	 * récupération de l'ensemble des document de la base de donnée
+	 * 
+	 * @return documents
+	 */
 	FindIterable<Document> requete() {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find();
 	}
 
+	/**
+	 * récupération des documents entre la date de début et la date de fin.
+	 * 
+	 * @param dateDebut
+	 * @param dateFin
+	 * @return documents
+	 */
 	FindIterable<Document> requete(Date debut, Date fin) {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find(Filters.and(Filters.gte("dateConnexion", debut), Filters.lte("dateConnexion", fin)));
 	}
 
+	/**
+	 * récupération du document associer à l'id
+	 * 
+	 * @param idConnexion
+	 * @return document
+	 */
 	Document requete(int idConnexion) {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find(Filters.eq("idConnexion", idConnexion)).first();
 	}
 
+	/**
+	 * ajout d'un element dans la base de donnée.
+	 * 
+	 * @param document
+	 */
 	public void ajoutDocument(Document document) {
 		MongoCollection<Document> collection = db.getCollection("historiqueConnexions");
 		collection.insertOne(document);
 	}
 
+	/**
+	 * modification d'un element dans la base de donnée
+	 * 
+	 * @param idConnexion
+	 * @param document
+	 */
 	public void updateDocument(int idConnexion, Document document) {
 		MongoCollection<Document> collection = db.getCollection("historiqueConnexions");
 		collection.updateOne(Filters.eq("idConnexion", idConnexion), new Document("$set", document));
 	}
 
+	/**
+	 * supprimer un element dans la base de donnée
+	 * 
+	 * @param idConnexion
+	 */
 	public void removeConnexion(Integer idConnexion) {
 		Document document = new Document("idConnexion", idConnexion);
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
@@ -148,6 +181,12 @@ public class BaseMongoDB {
 	// Modification des connexion existante dans la base
 	/////////////////////////////////
 
+	/**
+	 * ajout d'une date de déconnexion
+	 * 
+	 * @param idConnexion
+	 * @param dateDeconnexion
+	 */
 	public void updateConnexion(Integer idConnexion, Date dateDeconnexion) {
 		Document document = requete(idConnexion);
 		HistoriqueConnexion connexion = genererConnexion(document);
@@ -156,6 +195,13 @@ public class BaseMongoDB {
 		updateDocument(idConnexion, documentUpdate);
 	}
 
+	/**
+	 * ajout d'une page visité(avec sa date) sur un document
+	 * 
+	 * @param idConnexion
+	 * @param date
+	 * @param url
+	 */
 	public void updateConnexion(Integer idConnexion, Date date, String url) {
 		Document document = requete(idConnexion);
 		HistoriqueConnexion connexion = genererConnexion(document);
@@ -168,6 +214,13 @@ public class BaseMongoDB {
 	// Recherche des statistiques
 	/////////////////////////////////
 
+	/**
+	 * prend en parametre une liste de document venant d'une requete. renvois une
+	 * association entre chaque pages et son nombre totale de visite.
+	 * 
+	 * @param listDocument
+	 * @return statistiquePage
+	 */
 	public Map<String, Integer> utilisateurParPage(FindIterable<Document> list) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		for (MongoCursor<Document> curseur = list.iterator(); curseur.hasNext();) {
@@ -185,6 +238,13 @@ public class BaseMongoDB {
 		return result;
 	}
 
+	/**
+	 * prend en parametre une liste de document venant d'une requete. renvois une
+	 * association entre chaque jours son nombre totale de connexion.
+	 * 
+	 * @param listDocument
+	 * @return statistiqueJour
+	 */
 	public Map<Date, Integer> utilisateurParJour(FindIterable<Document> list) {
 		Map<Date, Integer> result = new HashMap<Date, Integer>();
 		for (MongoCursor<Document> curseur = list.iterator(); curseur.hasNext();) {
@@ -208,6 +268,12 @@ public class BaseMongoDB {
 	// Conversion du type
 	/////////////////////////////////
 
+	/**
+	 * convertie un objet type HistoriqueConnexion en Document.
+	 * 
+	 * @param historiqueConnexion
+	 * @return document
+	 */
 	Document genererDocument(HistoriqueConnexion connexion) {
 		Document document = new Document();
 		document.append("idConnexion", connexion.getIdConnexion());
@@ -227,6 +293,12 @@ public class BaseMongoDB {
 		return document;
 	}
 
+	/**
+	 * convertie un objet type Document en HistoriqueConnexion.
+	 * 
+	 * @param document
+	 * @return historiqueConnexion
+	 */
 	HistoriqueConnexion genererConnexion(Document document) {
 		int idConnexion = Integer.valueOf(document.getDouble("idConnexion").intValue());
 		int idUtilisateur = Integer.valueOf(document.getDouble("idUtilisateur").intValue());
