@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.bson.Document;
 
@@ -21,6 +22,7 @@ import bean.mongdb.HistoriqueConnexion;
 public class BaseMongoDB {
 
 	// Declaration des variables globales
+	private static String config = "resources/mongodb";
 	private MongoClient mongoClient;
 	private MongoDatabase db;
 
@@ -31,7 +33,9 @@ public class BaseMongoDB {
 	public static void main(String[] args) {
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
-		// mongo.testHistorique();
+		mongo.testCreateId();
+		mongo.testHistorique();
+		mongo.testCreateId();
 		// mongo.testDelete();
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
@@ -44,11 +48,15 @@ public class BaseMongoDB {
 	}
 
 	void testHistorique() {
-		HistoriqueConnexion connexion = new HistoriqueConnexion(45, 22, "Wind", "GG", new Date(55, 10, 20, 13, 45, 60));
+		HistoriqueConnexion connexion = new HistoriqueConnexion(0, 2, "Wind", "GG", new Date(55, 10, 20, 13, 45, 60));
 		connexion.addPagesVisitées(new Date(55, 10, 22, 13, 50, 60), "maPage2");
 		Document document = genererDocument(connexion);
 		ajoutDocument(document);
 		// visualiser();
+	}
+
+	void testCreateId() {
+		System.out.println("id : " + createIdConnexion());
 	}
 
 	void testDelete() {
@@ -100,9 +108,12 @@ public class BaseMongoDB {
 	 * Création d'une connexion avec la base de donnée.
 	 */
 	public void ouvrir() {
-		MongoClientURI uri = new MongoClientURI("mongodb://obiwan2.univ-brest.fr");
+		ResourceBundle resource = ResourceBundle.getBundle(config);
+		String url = resource.getString("url");
+		String base = resource.getString("base");
+		MongoClientURI uri = new MongoClientURI("mongodb://" + url);
 		mongoClient = new MongoClient(uri);
-		db = mongoClient.getDatabase("BDMongomasterProjet041");
+		db = mongoClient.getDatabase(base);
 	}
 
 	/**
@@ -150,6 +161,21 @@ public class BaseMongoDB {
 	 * 
 	 * @param document
 	 */
+	public int createIdConnexion() {
+		FindIterable<Document> documents = requete();
+		List<Integer> listId = new ArrayList<>();
+		for (MongoCursor<Document> curseur = documents.iterator(); curseur.hasNext();) {
+			Document document = curseur.next();
+			int idConnexion = Integer.valueOf(document.getDouble("idConnexion").intValue());
+			listId.add(idConnexion);
+		}
+		int monId = 0;
+		while (listId.contains(monId)) {
+			monId++;
+		}
+		return monId;
+	}
+
 	public void ajoutDocument(Document document) {
 		MongoCollection<Document> collection = db.getCollection("historiqueConnexions");
 		collection.insertOne(document);
