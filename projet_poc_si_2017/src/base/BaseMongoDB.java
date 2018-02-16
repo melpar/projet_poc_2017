@@ -34,8 +34,7 @@ public class BaseMongoDB {
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
 		mongo.testCreateId();
-		mongo.testHistorique();
-		mongo.testCreateId();
+		// mongo.testHistorique();
 		// mongo.testDelete();
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
@@ -277,6 +276,33 @@ public class BaseMongoDB {
 			Document document = curseur.next();
 			HistoriqueConnexion connexion = genererConnexion(document);
 			Date date = connexion.getDateConnexion();
+			date.setSeconds(0);
+			date.setMinutes(0);
+			date.setHours(0);
+
+			if (result.containsKey(date)) {
+				result.put(date, result.get(date) + 1);
+			} else {
+				result.put(date, 1);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * prend en parametre une liste de document venant d'une requete. renvois une
+	 * association entre chaque jours son nombre totale de connexion.
+	 * 
+	 * @param listDocument
+	 * @return statistiqueJour
+	 */
+	public Map<Date, Integer> utilisateurParMois(FindIterable<Document> list) {
+		Map<Date, Integer> result = new HashMap<Date, Integer>();
+		for (MongoCursor<Document> curseur = list.iterator(); curseur.hasNext();) {
+			Document document = curseur.next();
+			HistoriqueConnexion connexion = genererConnexion(document);
+			Date date = connexion.getDateConnexion();
+			date.setDate(0);
 			date.setSeconds(0);
 			date.setMinutes(0);
 			date.setHours(0);
