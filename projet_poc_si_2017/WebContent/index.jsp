@@ -47,8 +47,10 @@ if(request.getParameter("newsletter") != null){
 		boolean existe = base.connexion(mail, mdp); 
 		System.out.println("connexion? "+existe);
 		base.fermer();
-		session.setAttribute("connexion", "vrai");
-		session.setAttribute("mail", mail);
+		if(existe){
+			session.setAttribute("connexion", "vrai");
+			session.setAttribute("mail", mail);
+		}
 	}
 %>
   <body>
