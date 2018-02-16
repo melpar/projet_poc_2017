@@ -92,17 +92,22 @@
 			<c:forEach items="${questionnaire}" var="question">
 				<ul class="w3-ul w3-border-top">
 					<li>
-						<h3>${question.key}</h3> <c:forEach items="${question.value}"
-							var="reponse">
-							<input class="w3-radio" type="radio" name="${question.value}"
-								value="${reponse}">
-							<label>${reponse}</label><br>
+						<h3>${question.key}</h3>
+						<select name="${question.value}">
+						 <c:forEach items="${question.value}"
+							var="reponse">							
+								<option value="${reponse}">${reponse}</option>
+							<label></label><br>
 						</c:forEach>
+						</select>
 					</li>
 				</ul>
 			</c:forEach>
 			<hr>
 
+
+
+           
 
 			<input type="submit" value="S'inscrire" class="w3-btn w3-theme">
 		</form>
