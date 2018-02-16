@@ -19,6 +19,11 @@ import bean.mariadb.Question;
 import bean.mariadb.ReponsePersonne;
 import util.Cryptage;
 
+/**
+ * 
+ * @author M1 - informatique Louarn - Parlant - Maresceaux - Le Guyader Classe
+ *         qui contient les fonctionalite pour la basse mariadb
+ */
 public class BaseMariaDB {
 	private static String config = "resources/mariadb";
 	private Connection co;
@@ -38,6 +43,11 @@ public class BaseMariaDB {
 		System.out.println(url);
 	}
 
+	/**
+	 * Ouverture de la basse
+	 * 
+	 * @return true, si la connection a la base a reussi
+	 */
 	public boolean ouvrir() {
 		ResourceBundle resource = ResourceBundle.getBundle(config);
 		String url = resource.getString("url");
@@ -53,6 +63,9 @@ public class BaseMariaDB {
 		return true;
 	}
 
+	/**
+	 * Fermeture de la base
+	 */
 	public void fermer() {
 		try {
 			co.close();
@@ -62,6 +75,13 @@ public class BaseMariaDB {
 		}
 	}
 
+	/**
+	 * Recupere l'objet Connexion stocker dans la basse
+	 * 
+	 * @param mail
+	 *            Mail representent l'identifiant de l'objet a recuperer
+	 * @return Retourne l'objet Connexion
+	 */
 	public Connexion getConnexion(String mail) {
 		Connexion connexion = new Connexion();
 		ResultSet rs;
@@ -83,6 +103,11 @@ public class BaseMariaDB {
 		return connexion;
 	}
 
+	/**
+	 * Recuperation des questions
+	 * 
+	 * @return Liste de Question
+	 */
 	public ArrayList<String> getQuestions() {
 		ArrayList<String> questions = new ArrayList<>();
 		ResultSet rs;
@@ -107,6 +132,13 @@ public class BaseMariaDB {
 		return questions;
 	}
 
+	/**
+	 * Recuperation de l'ensemble des reponse d'une personne
+	 * 
+	 * @param mail
+	 *            Mail de la personne
+	 * @return l'emsemble des reponses
+	 */
 	public HashMap<Question, ReponsePersonne> getReponsesPersonne(String mail) {
 		HashMap<Question, ReponsePersonne> reponses = new HashMap<>();
 		ResultSet rs;
@@ -146,6 +178,14 @@ public class BaseMariaDB {
 		return reponses;
 	}
 
+	/**
+	 * Recupere l'objet Personne en fonction du mail
+	 * 
+	 * @param mail
+	 *            Mail de la personne
+	 * @return l'objet Personne
+	 */
+
 	public Personne getPersonne(String mail) {
 		Personne personne = new Personne();
 		ResultSet rs;
@@ -176,6 +216,11 @@ public class BaseMariaDB {
 		return personne;
 	}
 
+	/**
+	 * L'enseble des personne stocker dans la basse
+	 * 
+	 * @return La liste de personne
+	 */
 	public List<Personne> getPersonnes() {
 		List<Personne> personnes = new ArrayList<>();
 		ResultSet rs;
@@ -205,6 +250,11 @@ public class BaseMariaDB {
 
 	}
 
+	/**
+	 * Recupere le formulaire necessaire pour l'inscription
+	 * 
+	 * @return le formulaire
+	 */
 	public Formulaire getFormulaire() {
 		Formulaire formulaire = new Formulaire();
 
@@ -250,6 +300,15 @@ public class BaseMariaDB {
 		return formulaire;
 	}
 
+	/**
+	 * Verification des identifiants de connexion
+	 * 
+	 * @param mail
+	 *            mail de l'utilisateur
+	 * @param mdp
+	 *            Mot de passe de l'utilisateur
+	 * @return true,si les identifiants son correct, false sinon
+	 */
 	public boolean connexion(String mail, String mdp) {
 		ResultSet rs;
 		try {
@@ -280,6 +339,13 @@ public class BaseMariaDB {
 
 	}
 
+	/**
+	 * Ajouter les identifiant de connexion dans la basse
+	 * 
+	 * @param con
+	 *            objet Connexion
+	 * @return true, si l'ajout est un succes , false sinon
+	 */
 	private boolean ajouterCon(Connexion con) {
 		try {
 			int rs;
@@ -306,6 +372,13 @@ public class BaseMariaDB {
 		return true;
 	}
 
+	/**
+	 * Ajouter les informations d'une personne dans la basse
+	 * 
+	 * @param per
+	 *            personne a ajouter
+	 * @return true, si l'ajout est un succes , false sinon
+	 */
 	private boolean ajouterPer(Personne per) {
 		try {
 			int rs;
@@ -333,6 +406,15 @@ public class BaseMariaDB {
 		return true;
 	}
 
+	/**
+	 * Ajout de la reponse d'une personne dans la basse
+	 * 
+	 * @param idMail
+	 *            Mail de la personne
+	 * @param rep
+	 *            Reponse de la personne
+	 * @return true, si l'ajout est un succes , false sinon
+	 */
 	private boolean ajouterRep(String idMail, ReponsePersonne rep) {
 		try {
 			int rs;
@@ -359,6 +441,17 @@ public class BaseMariaDB {
 		return true;
 	}
 
+	/**
+	 * inscription d'une personne
+	 * 
+	 * @param per
+	 *            Personne
+	 * @param rep
+	 *            Reponse au formulaire
+	 * @return true, si l'ajout est un succes , false sinon
+	 * 
+	 */
+
 	public boolean inscription(Personne per, List<ReponsePersonne> rep) {
 		if (this.ajouterCon(per.getConnexion()) != true) {
 			return false;
@@ -376,6 +469,13 @@ public class BaseMariaDB {
 		return true;
 	}
 
+	/**
+	 * Enregistre un mail pour la liste de diffusion
+	 * 
+	 * @param mail
+	 *            Mail a enregistrer
+	 * @return true, si l'ajout est un succes , false sinon
+	 */
 	public boolean ajouterNewsletter(String mail) {
 		ResultSet rs;
 		PreparedStatement st;
