@@ -67,7 +67,7 @@
 	<div class="w3-row-padding">
 
 
-		<form class="w3-container w3-card-4">
+		<form class="w3-container w3-card-4" >
 			<h2>Information personnel</h2>
 			<div class="w3-section">
 				<input class="w3-input" type="text" required> <label>Nom</label>
@@ -96,7 +96,7 @@
 							var="reponse">
 							<input class="w3-radio" type="radio" name="${question.value}"
 								value="${reponse}">
-							<label>${reponse}</label>
+							<label>${reponse}</label><br>
 						</c:forEach>
 					</li>
 				</ul>
