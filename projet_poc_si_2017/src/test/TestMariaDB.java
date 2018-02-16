@@ -48,7 +48,7 @@ public class TestMariaDB {
 		List<ReponsePersonne> liste_reponse_personne = new ArrayList<ReponsePersonne>();
 		for (int i = 0; i < 10; i++) {
 			liste_reponse_personne.add(new ReponsePersonne());
-			liste_reponse_personne.get(i).setIdQuestion(2);
+			liste_reponse_personne.get(i).setIdQuestion(5);
 			liste_reponse_personne.get(i).setValeur("test " + i);
 		}
 
