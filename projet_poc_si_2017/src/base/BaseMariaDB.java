@@ -150,7 +150,7 @@ public class BaseMariaDB {
 		Personne personne = new Personne();
 		ResultSet rs;
 		try {
-			String query = "select * from T_PERSONNE_PER WHERE PER_idMail = ?";
+			String query = "select * from T_PERSONNE_PER WHERE PER_id = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
 			rs = preparedStmt.executeQuery();
