@@ -113,6 +113,7 @@ public class BaseMongoDB {
 		MongoClientURI uri = new MongoClientURI("mongodb://" + url);
 		mongoClient = new MongoClient(uri);
 		db = mongoClient.getDatabase(base);
+		System.out.println("BASE OUVERTE");
 	}
 
 	/**
@@ -172,12 +173,18 @@ public class BaseMongoDB {
 		while (listId.contains(monId)) {
 			monId++;
 		}
+		System.out.println("PASSER");
 		return monId;
 	}
 
 	public void ajoutDocument(Document document) {
 		MongoCollection<Document> collection = db.getCollection("historiqueConnexions");
 		collection.insertOne(document);
+	}
+
+	public void ajoutHistoriqueConnexion(HistoriqueConnexion historiqueConnexion) {
+		Document document = genererDocument(historiqueConnexion);
+		ajoutDocument(document);
 	}
 
 	/**
@@ -205,6 +212,21 @@ public class BaseMongoDB {
 	/////////////////////////////////
 	// Modification des connexion existante dans la base
 	/////////////////////////////////
+
+	/**
+	 * ajout d'un identifiant d'utilisateur
+	 * 
+	 * @param idConnexion
+	 * @param idUtilisateur
+	 */
+	public void updateConnexion(Integer idConnexion, Integer idUtilisateur) {
+		Document document = requete(idConnexion);
+		HistoriqueConnexion connexion = genererConnexion(document);
+		connexion.setIdUtilisateur(idUtilisateur);
+		;
+		Document documentUpdate = genererDocument(connexion);
+		updateDocument(idConnexion, documentUpdate);
+	}
 
 	/**
 	 * ajout d'une date de déconnexion
