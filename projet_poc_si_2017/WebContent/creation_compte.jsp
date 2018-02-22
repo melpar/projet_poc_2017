@@ -45,7 +45,7 @@
     
     <div class="w3-row-padding">
         <div class="w3-half">
-        	<button type="button" onclick="window.location='creation_compte.jsp';">Créer un compte</button>
+        	<button type="button" onclick="window.location='formulaire-inscription.jsp';">Créer un compte</button>
         </div>
         
         <div class="w3-half">
