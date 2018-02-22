@@ -253,25 +253,24 @@ var myChart = new Chart(ctx, {
 
 
 <script>
-<% java.util.List<Integer> valeurs=new java.util.ArrayList<Integer>();
-valeurs.add(12); 
-valeurs.add(19); 
-valeurs.add(3); 
-valeurs.add(5);valeurs.add(2);valeurs.add(3);%>
 
 var ctx = document.getElementById("pourcentage").getContext('2d');
-var valeurs=[];
-<% for (int i=0; i<valeurs.size(); i++) { %>
-	valeurs[<%= i %>] = "<%= valeurs.get(i) %>"; 
-<% } %>
-
+var pourcentages = [];
+var total = 0;
+var i;
+for(i = 0; i < valeursParPage.length; i++){
+	total =parseInt(total)+ parseInt(valeursParPage[i]);
+}
+for(i = 0; i < valeursParPage.length; i++){
+	pourcentages[i] = (valeursParPage[i]/total)*100;
+}
 var myChart = new Chart(ctx, {
     type: 'polarArea',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: labelsParPage,
         datasets: [{
             label: '# of Votes',
-            data: valeurs,
+            data: pourcentages,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

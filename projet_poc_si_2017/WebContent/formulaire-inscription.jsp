@@ -1,6 +1,5 @@
 <!doctype html>
 
-<%@page import="util.HistoriqueUtil"%>
 <%@page import="bean.mariadb.Personne"%>
 <%@page import="bean.mariadb.Connexion"%>
 <%@page import="bean.mariadb.ReponsePersonne"%>
@@ -19,22 +18,42 @@
 <%
 	BaseMariaDB b = new BaseMariaDB();
 	b.ouvrir();
-
-	HashMap<String, ArrayList<String>> questionnaire = new HashMap<>();
-
+	HashMap<Question, ReponsePersonne> questionnaire = new HashMap<Question, ReponsePersonne> ();
 	Formulaire f = b.getFormulaire();
 	List<Question> liste_question = f.getListeQuesstion();
-	for (int i = 0; i < liste_question.size(); i++) {
-		ArrayList<String> reponses = new ArrayList<>();
-		List<ReponseQuestion> liste_reponse = liste_question.get(i).getQue_listeReponse();
-		for (int y = 0; y < liste_reponse.size(); y++) {
-			reponses.add(liste_reponse.get(y).getReq_texte());
+	if (request.getParameter("submit") != null) {
+		
+		String mail =request.getParameter("mail");
+		String nom = request.getParameter("nom");
+		String prenom =request.getParameter("prenom");
+		String mdp=request.getParameter("mdp");
+		String risque =request.getParameter("risque");
+		
+		Connexion connexion =new Connexion();
+		connexion.setCon_idMail(mail);
+		connexion.setCon_motDePasse(mdp);
+		
+		
+		Personne personne =new Personne();
+		personne.setConnexion(connexion);
+		personne.setPer_nom(nom);
+		personne.setPer_prenom(prenom);
+		personne.setPer_risque(false);	
+		
+		for (int i = 0; i < liste_question.size(); i++) {
+			int identifiant = liste_question.get(i).getQue_id();
+			String valeur =request.getParameter(identifiant+"");
+			ReponsePersonne reponse = new ReponsePersonne();
+			reponse.setIdQuestion(identifiant);
+			reponse.setValeur(valeur);
+			questionnaire.put(liste_question.get(i),reponse);
 		}
-		questionnaire.put(liste_question.get(i).getQue_question(), reponses);
+		
+		personne.setReponses(questionnaire);
+		boolean i=b.inscription(personne);
+		System.out.println("inscription:"+i);
 	}
-
-	request.setAttribute("questionnaire", questionnaire);
-
+	request.setAttribute("liste_question", liste_question);
 	b.fermer();
 %>
 
@@ -61,7 +80,7 @@
 
 <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
 </head>
-<%HistoriqueUtil.creer(session).addPageHistorique("formulaire-inscription"); %>
+
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
@@ -71,17 +90,25 @@
 	<div class="w3-row-padding">
 
 
-		<form class="w3-container w3-card-4" >
+		<form class="w3-container w3-card-4" method="post" action="formulaire-inscription.jsp"  >
 			<h2>Information personnel</h2>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Nom</label>
+				<input class="w3-input" type="text" required name="nom"> <label>Nom</label>
 			</div>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Prenom</label>
+				<input class="w3-input" type="text" required name="prenom"> <label>Prenom</label>
 			</div>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Email</label>
+				<input class="w3-input" type="text" required name="mail"> <label>Email</label>
 			</div>
+			
+			<div class="w3-section">
+				<input class="w3-input" type="password" required name="mdp"> <label>Mot de passe</label>
+			</div>
+			<div class="w3-section">
+				<input class="w3-input" type="password" required name="mdpv"> <label>Retaper Mot de passe</label>
+			</div>
+			
 			<div class="w3-section">
 				<label>A quelle information vous préfere avoir acces ?</label> <br>
 				<input id="male" class="w3-radio" type="radio" name="risque"
@@ -93,14 +120,14 @@
 			<hr>
 			<h2>Questionnaire</h2>
 
-			<c:forEach items="${questionnaire}" var="question">
+			<c:forEach items="${liste_question}" var="question">
 				<ul class="w3-ul w3-border-top">
 					<li>
-						<h3>${question.key}</h3>
-						<select name="${question.value}">
-						 <c:forEach items="${question.value}"
+						<h3>${question.getQue_question()}</h3>
+						<select name="${question.getQue_id()}">
+						 <c:forEach items="${question.getQue_listeReponse()}"
 							var="reponse">							
-								<option value="${reponse}">${reponse}</option>
+								<option value="${reponse.getReq_texte()}">${reponse.getReq_texte()}</option>
 							<label></label><br>
 						</c:forEach>
 						</select>
@@ -113,7 +140,7 @@
 
            
 
-			<input type="submit" value="S'inscrire" class="w3-btn w3-theme">
+			<input type="submit" value="S'inscrire" name="submit" class="w3-btn w3-theme">
 		</form>
 
 	</div>
