@@ -1,5 +1,6 @@
 <!doctype html>
 
+<%@page import="util.HistoriqueUtil"%>
 <%@page import="bean.mariadb.Personne"%>
 <%@page import="bean.mariadb.Connexion"%>
 <%@page import="bean.mariadb.ReponsePersonne"%>
