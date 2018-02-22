@@ -1,5 +1,6 @@
 <!doctype html>
 
+<%@page import="util.HistoriqueUtil"%>
 <%@page import="base.BaseMariaDB"%>
 <%@page import="javafx.scene.control.Alert"%>
 <%@page import="com.sun.glass.ui.Window"%>
@@ -19,7 +20,10 @@
     
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
-
+<%
+HistoriqueUtil historique = HistoriqueUtil.creer(session);
+historique.addPageHistorique("index");
+%>
 <%
 if(request.getParameter("newsletter") != null){
 	BaseMariaDB base = new BaseMariaDB();
