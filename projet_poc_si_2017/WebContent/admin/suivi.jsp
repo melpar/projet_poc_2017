@@ -89,14 +89,32 @@ $('select').material_select();</script>
   </div>
 	
 <script>
+<% 
+	java.util.List<Integer> valeursParJours=new java.util.ArrayList<Integer>();
+	java.util.List<String> labelsParJours=new java.util.ArrayList<String>();
+	base.BaseMongoDB base = new base.BaseMongoDB();
+	base.ouvrir();
+	com.mongodb.client.FindIterable<org.bson.Document> documentsJours = base.requete();
+	java.util.Map<java.util.Date, Integer> mapParJours = base.utilisateurParJour(documentsJours);
+	java.util.Map<java.util.Date, Integer> treeMap = new java.util.TreeMap(mapParJours);
+	for(java.util.Date key : treeMap.keySet()){
+		valeursParJours.add(treeMap.get(key));
+		labelsParJours.add(key.getDay()+"/"+(key.getMonth()+1)+"/"+(key.getYear()+1900));
+	}
+%>
 var ctx = document.getElementById("utilisateursParJour").getContext('2d');
+var valeursParJours=[];
+var labelsParJours=[];
+<% for (int i=0; i<valeursParJours.size(); i++) { %>
+	valeursParJours[<%= i %>] = "<%= valeursParJours.get(i) %>";
+	labelsParJours[<%= i %>] = "<%= labelsParJours.get(i) %>";
+<% } %>
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: labelsParJours,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: valeursParJours,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)'
             ],
@@ -125,13 +143,14 @@ var myChart = new Chart(ctx, {
 <% 
 	java.util.List<Integer> valeursParMois=new java.util.ArrayList<Integer>();
 	java.util.List<String> labelsParMois=new java.util.ArrayList<String>();
-	base.BaseMongoDB base = new base.BaseMongoDB();
+	base = new base.BaseMongoDB();
 	base.ouvrir();
 	com.mongodb.client.FindIterable<org.bson.Document> documentsMois = base.requete();
 	java.util.Map<java.util.Date, Integer> mapParMois = base.utilisateurParMois(documentsMois);
-	for(java.util.Date key : mapParMois.keySet()){
-		valeursParMois.add(mapParMois.get(key));
-		labelsParMois.add(key.toString());
+	java.util.Map<java.util.Date, Integer> treeMapMois = new java.util.TreeMap(mapParMois);
+	for(java.util.Date key : treeMapMois.keySet()){
+		valeursParMois.add(treeMapMois.get(key));
+		labelsParMois.add((key.getMonth()+1)+"/"+(key.getYear()+1900));
 	}
 %>
 var ctx = document.getElementById("utilisateursParMois").getContext('2d');
