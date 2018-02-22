@@ -36,6 +36,10 @@ public class BaseMongoDB {
 		mongo.testCreateId();
 		// mongo.testHistorique();
 		// mongo.testDelete();
+		mongo.removeConnexion(40);
+		mongo.removeConnexion(42);
+		mongo.removeConnexion(43);
+		mongo.removeConnexion(45);
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
 		// mongo.testUtilisateurParJour();
@@ -128,7 +132,7 @@ public class BaseMongoDB {
 	 * 
 	 * @return documents
 	 */
-	FindIterable<Document> requete() {
+	public FindIterable<Document> requete() {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find();
 	}
@@ -140,7 +144,7 @@ public class BaseMongoDB {
 	 * @param dateFin
 	 * @return documents
 	 */
-	FindIterable<Document> requete(Date debut, Date fin) {
+	public FindIterable<Document> requete(Date debut, Date fin) {
 		MongoCollection<Document> coll = db.getCollection("historiqueConnexions");
 		return coll.find(Filters.and(Filters.gte("dateConnexion", debut), Filters.lte("dateConnexion", fin)));
 	}
@@ -173,7 +177,6 @@ public class BaseMongoDB {
 		while (listId.contains(monId)) {
 			monId++;
 		}
-		System.out.println("PASSER");
 		return monId;
 	}
 
