@@ -33,16 +33,13 @@ public class BaseMongoDB {
 	public static void main(String[] args) {
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
-		mongo.testCreateId();
+		// mongo.testCreateId();
 		// mongo.testHistorique();
 		// mongo.testDelete();
-		mongo.removeConnexion(40);
-		mongo.removeConnexion(42);
-		mongo.removeConnexion(43);
-		mongo.removeConnexion(45);
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
-		// mongo.testUtilisateurParJour();
+		mongo.testUtilisateurParJour();
+		mongo.testUtilisateurParMois();
 		// mongo.testUpdatePage();
 
 		// mongo.visualiser(mongo.requete(new Date(55, 10, 19, 13, 45, 60), new Date(55,
@@ -74,6 +71,10 @@ public class BaseMongoDB {
 
 	void testUtilisateurParJour() {
 		System.out.println(utilisateurParJour(requete()).toString());
+	}
+
+	void testUtilisateurParMois() {
+		System.out.println(utilisateurParMois(requete()).toString());
 	}
 
 	void testUpdateDeconnexion() {
@@ -301,13 +302,19 @@ public class BaseMongoDB {
 			Document document = curseur.next();
 			HistoriqueConnexion connexion = genererConnexion(document);
 			Date date = connexion.getDateConnexion();
-			date.setSeconds(0);
-			date.setMinutes(0);
-			date.setHours(0);
 
-			if (result.containsKey(date)) {
-				result.put(date, result.get(date) + 1);
-			} else {
+			boolean estPresent = false;
+			for (Date dateMap : result.keySet()) {
+				if (dateMap.getDay() == date.getDay() && dateMap.getMonth() == date.getMonth()
+						&& dateMap.getYear() == date.getYear()) {
+					result.replace(dateMap, result.get(dateMap) + 1);
+					estPresent = true;
+				}
+			}
+			if (!estPresent) {
+				date.setSeconds(0);
+				date.setMinutes(0);
+				date.setHours(0);
 				result.put(date, 1);
 			}
 		}
@@ -327,14 +334,18 @@ public class BaseMongoDB {
 			Document document = curseur.next();
 			HistoriqueConnexion connexion = genererConnexion(document);
 			Date date = connexion.getDateConnexion();
-			date.setDate(0);
-			date.setSeconds(0);
-			date.setMinutes(0);
-			date.setHours(0);
-
-			if (result.containsKey(date)) {
-				result.put(date, result.get(date) + 1);
-			} else {
+			boolean estPresent = false;
+			for (Date dateMap : result.keySet()) {
+				if (dateMap.getMonth() == date.getMonth() && dateMap.getYear() == date.getYear()) {
+					result.replace(dateMap, result.get(dateMap) + 1);
+					estPresent = true;
+				}
+			}
+			if (!estPresent) {
+				date.setDate(1);
+				date.setSeconds(0);
+				date.setMinutes(0);
+				date.setHours(0);
 				result.put(date, 1);
 			}
 		}
