@@ -20,7 +20,7 @@
     	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg"></a>
     	<%
     	if(session.getAttribute("connexion") != null){ %>
-        <button class="w3-btn w3-theme" onclick="move()" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</button>
+    	<a href="page-utilisateur.jsp" class="w3-btn w3-theme" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</a>
     	<%} %>
     </h1>
     

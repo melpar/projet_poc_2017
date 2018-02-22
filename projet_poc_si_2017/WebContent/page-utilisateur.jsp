@@ -31,43 +31,13 @@
 </head>
 
 <%
-	if (request.getParameter("newsletter") != null) {
-		BaseMariaDB base = new BaseMariaDB();
-		base.ouvrir();
-		String mail = request.getParameter("mail");
-		base.ajouterNewsletter(mail);
-		base.fermer();
-		
-%>
-
-<script>
-	var mail = window.location.search.substr(1).split("&")[0].split("=")[1];
-	alert("Votre adresse a bien été enregistrée. Merci de votre confiance.");
-</script>
-<%
-	}
-%>
-
-<%
-	if (request.getParameter("connexion") != null) {
-		BaseMariaDB base = new BaseMariaDB();
-		base.ouvrir(); 
-		String mail = request.getParameter("mail");
-		String mdp = request.getParameter("mdp");
-		boolean existe = base.connexion(mail, mdp);
-		System.out.println("connexion? " + existe);
-		base.fermer();
-		session.setAttribute("connexion", "vrai");
-		session.setAttribute("mail", mail);
-	}
-%>
-
-<%
+	System.out.println("recuperation données pour : "+session.getAttribute("mail"));
 	String mail = session.getAttribute("mail").toString();
 	BaseMariaDB base = new BaseMariaDB();
 	base.ouvrir();
 
 	personne = base.getPersonne(mail);
+	System.out.println("nom : "+personne.getPer_nom());
 	questionnaire = personne.getReponses(); 
 	System.out.println(questionnaire);
 
@@ -115,7 +85,7 @@
 					</li>
 					<li>
 						<h3>Prenom :</h3>
-						<p></p>
+						<p>${personne.per_prenom}</p>
 					</li>
 					<li>
 						<h3>Mail</h3>
@@ -133,8 +103,7 @@
 				<ul class="w3-ul w3-border-top">
 					<li>
 						<p>
-							<a href="https://www.w3schools.com/w3css/default.asp"
-								target="_blank">w3.css</a>
+							<a href="page_personnalisee.jsp">Page personnalisée</a>
 						</p>
 					</li>
 				</ul>

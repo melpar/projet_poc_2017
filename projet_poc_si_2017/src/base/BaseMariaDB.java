@@ -190,11 +190,12 @@ public class BaseMariaDB {
 		Personne personne = new Personne();
 		ResultSet rs;
 		try {
-			String query = "select * from T_PERSONNE_PER WHERE PER_id = ?";
+			String query = "select * from T_PERSONNE_PER WHERE PER_idMail = ?";
 			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
 			preparedStmt.setString(1, mail);
+			// System.out.println(preparedStmt.toString());
 			rs = preparedStmt.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				personne.setPer_nom(rs.getString("PER_nom"));
 				personne.setPer_prenom(rs.getString("PER_prenom"));
 				personne.setPer_risque(rs.getBoolean("PER_risque"));

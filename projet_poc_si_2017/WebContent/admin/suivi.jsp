@@ -31,7 +31,7 @@ $('select').material_select();</script>
   
 
   <header class="indigo" style="padding-left: 0">
-   	<img alt="logo" src="../img/cropped-logoWeMoe.png" style="width:20%">
+   	<img alt="logo" src="../img/cropped-logoWeMoe2.png" style="width:20%">
 
   </header>
 
@@ -45,7 +45,7 @@ $('select').material_select();</script>
             </div>
           </div>
 
-          <canvas id="utilisateursParJour" width="400" height="400"></canvas>
+          <canvas id="utilisateursParJour" width="400" height="200"></canvas>
         </div>
       </div>
 
@@ -53,10 +53,10 @@ $('select').material_select();</script>
         <div style="padding: 35px;" align="center" class="card">
           <div class="row">
             <div class="left card-title">
-              <b>Nombre d'utilisateur par mois</b>
+              <b>Nombre d'utilisateurs par mois</b>
             </div>
           </div>
-          <canvas id="utilisateursParMois" width="400" height="400"></canvas>
+          <canvas id="utilisateursParMois" width="400" height="200"></canvas>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ $('select').material_select();</script>
             </div>
           </div>
 
-          <canvas id="utilisateursParPage" width="400" height="400"></canvas>
+          <canvas id="utilisateursParPage" width="400" height="200"></canvas>
         </div>
       </div>
 
@@ -81,38 +81,11 @@ $('select').material_select();</script>
               <b>Pourcentage d'utilisateurs par page</b>
             </div>
           </div>
-          <canvas id="pourcentage" width="400" height="400"></canvas>
+          <canvas id="pourcentage" width="400" height="200"></canvas>
         </div>
       </div>
     </div>
 
-    <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-      <a class="btn-floating btn-large pink waves-effect waves-light">
-        <i class="large material-icons">add</i>
-      </a>
-
-      <ul>
-        <li>
-          <a class="btn-floating red"><i class="material-icons">note_add</i></a>
-          <a href="" class="btn-floating fab-tip">Add a note</a>
-        </li>
-
-        <li>
-          <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
-          <a href="" class="btn-floating fab-tip">Add a photo</a>
-        </li>
-
-        <li>
-          <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
-          <a href="" class="btn-floating fab-tip">Add an alarm</a>
-        </li>
-
-        <li>
-          <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
-          <a href="" class="btn-floating fab-tip">Add a master password</a>
-        </li>
-      </ul>
-    </div>
   </div>
 	
 <script>
@@ -275,24 +248,10 @@ var myChart = new Chart(ctx, {
 });
 </script>
   <footer class="indigo page-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col s12">
-          <h5 class="white-text">Icon Credits</h5>
-          <ul id='credits'>
-            <li>
-              Gif Logo made using <a href="https://formtypemaker.appspot.com/" title="Form Type Maker">Form Type Maker</a> from <a href="https://github.com/romannurik/FORMTypeMaker" title="romannurik">romannurik</a>
-            </li>
-            <li>
-              Icons made by <a href="https://material.io/icons/">Google</a>, available under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License Version 2.0</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+
     <div class="footer-copyright">
       <div class="container">
-         <span>Made By <a style='font-weight: bold;' href="https://github.com/piedcipher" target="_blank">Tirth Patel</a></span>
+         <span><a style='font-weight: bold;' href="https://github.com/piedcipher" target="_blank">We Moë</a></span>
       </div>
     </div>
   </footer>
