@@ -23,8 +23,7 @@
     	if(session.getAttribute("connexion") != null){ %>
     	
     	<%
-    	HistoriqueUtil historique = HistoriqueUtil.creer(session);
-    	historique.setIdUtilisateur((String)session.getAttribute("mail"));
+    	HistoriqueUtil.creer(session).setIdUtilisateur((String)session.getAttribute("mail"));
     	%>
     	
     	<a href="page-utilisateur.jsp" class="w3-btn w3-theme" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</a>

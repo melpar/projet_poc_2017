@@ -1,5 +1,6 @@
 <!doctype html>
 
+<%@page import="util.HistoriqueUtil"%>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -16,7 +17,7 @@
     
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
-
+<%HistoriqueUtil.creer(session).addPageHistorique("connexion"); %>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
