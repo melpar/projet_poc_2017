@@ -3,7 +3,6 @@
 <%@page import="bean.mariadb.Personne"%>
 <%@page import="bean.mariadb.Connexion"%>
 <%@page import="bean.mariadb.ReponsePersonne"%>
-<%@page import="util.HistoriqueUtil"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="bean.mariadb.ReponseQuestion"%>
