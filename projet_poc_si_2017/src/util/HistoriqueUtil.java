@@ -15,14 +15,14 @@ public class HistoriqueUtil {
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
 		idConnexion = mongo.createIdConnexion();
-		String systeme = System.getProperties().getProperty("os.name");
+		String systeme = null;
 		// String navigateur = request.getHeader("User-Agent");
 		String navigateur = null;
 		HistoriqueConnexion historique;
 		if (session.getAttribute("mail") == null) {
 			historique = new HistoriqueConnexion(idConnexion, systeme, navigateur, dateConnexion);
 		} else {
-			int idUtilisateur = getIdUtilisateur((String) session.getAttribute("mail"));
+			String idUtilisateur = getIdUtilisateur((String) session.getAttribute("mail"));
 			historique = new HistoriqueConnexion(idConnexion, idUtilisateur, systeme, navigateur, dateConnexion);
 		}
 		mongo.ajoutHistoriqueConnexion(historique);
@@ -41,7 +41,7 @@ public class HistoriqueUtil {
 		return histo;
 	}
 
-	public void setIdUtilisateur(int idUtilisateur) {
+	public void setIdUtilisateur(String idUtilisateur) {
 
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
@@ -89,7 +89,7 @@ public class HistoriqueUtil {
 	 * }
 	 */
 
-	int getIdUtilisateur(String mail) {
-		return 0;
+	String getIdUtilisateur(String mail) {
+		return mail;
 	}
 }

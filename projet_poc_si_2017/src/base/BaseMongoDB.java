@@ -47,7 +47,8 @@ public class BaseMongoDB {
 	}
 
 	void testHistorique() {
-		HistoriqueConnexion connexion = new HistoriqueConnexion(0, 2, "Wind", "GG", new Date(55, 10, 20, 13, 45, 60));
+		HistoriqueConnexion connexion = new HistoriqueConnexion(0, "gg@gg.com", "Wind", "GG",
+				new Date(55, 10, 20, 13, 45, 60));
 		connexion.addPagesVisitées(new Date(55, 10, 22, 13, 50, 60), "maPage2");
 		Document document = genererDocument(connexion);
 		ajoutDocument(document);
@@ -219,7 +220,7 @@ public class BaseMongoDB {
 	 * @param idConnexion
 	 * @param idUtilisateur
 	 */
-	public void updateConnexion(Integer idConnexion, Integer idUtilisateur) {
+	public void updateConnexion(Integer idConnexion, String idUtilisateur) {
 		Document document = requete(idConnexion);
 		HistoriqueConnexion connexion = genererConnexion(document);
 		connexion.setIdUtilisateur(idUtilisateur);
@@ -375,7 +376,7 @@ public class BaseMongoDB {
 	 */
 	HistoriqueConnexion genererConnexion(Document document) {
 		int idConnexion = Integer.valueOf(document.getDouble("idConnexion").intValue());
-		int idUtilisateur = Integer.valueOf(document.getDouble("idUtilisateur").intValue());
+		String idUtilisateur = document.getString("idUtilisateur");
 		String systeme = document.getString("systeme");
 		String navigateur = document.getString("navigateur");
 		Date dateConnexion = document.getDate("dateConnexion");

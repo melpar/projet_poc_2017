@@ -11,14 +11,14 @@ import annotation.Table;
 public class HistoriqueConnexion {
 	@Id
 	private double idConnexion;
-	private double idUtilisateur;
+	private String idUtilisateur;
 	private String systeme;
 	private String navigateur;
 	private Date dateConnexion;
 	private Date dateDeconnexion;
 	private Map<Date, String> pagesVisitées;
 
-	public HistoriqueConnexion(double idConnexion, double idUtilisateur, String systeme, String navigateur,
+	public HistoriqueConnexion(double idConnexion, String idUtilisateur, String systeme, String navigateur,
 			Date dateConnexion) {
 		super();
 		this.idConnexion = idConnexion;
@@ -60,11 +60,11 @@ public class HistoriqueConnexion {
 		return idConnexion;
 	}
 
-	public void setIdUtilisateur(double idUtilisateur) {
+	public void setIdUtilisateur(String idUtilisateur) {
 		this.idUtilisateur = idUtilisateur;
 	}
 
-	public double getIdUtilisateur() {
+	public String getIdUtilisateur() {
 		return idUtilisateur;
 	}
 
