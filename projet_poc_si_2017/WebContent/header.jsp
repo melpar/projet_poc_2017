@@ -1,3 +1,4 @@
+<%@page import="util.HistoriqueUtil"%>
 <%@page import="com.sun.glass.ui.Window"%>
 <html>
   <head>
@@ -20,6 +21,12 @@
     	<a href="/projet_poc_si_2017/index.jsp"><img alt="logo" src="img/cropped-logoWeMoe.jpg"></a>
     	<%
     	if(session.getAttribute("connexion") != null){ %>
+    	
+    	<%
+    	HistoriqueUtil historique = HistoriqueUtil.creer(session);
+    	historique.setIdUtilisateur((String)session.getAttribute("mail"));
+    	%>
+    	
     	<a href="page-utilisateur.jsp" class="w3-btn w3-theme" style="background-color:orange !important; float:right;margin-right: 5px">Mon compte</a>
     	<%} %>
     </h1>
