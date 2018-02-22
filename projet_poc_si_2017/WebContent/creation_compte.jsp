@@ -1,5 +1,6 @@
 <!doctype html>
 
+<%@page import="util.HistoriqueUtil"%>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -21,6 +22,7 @@
 	System.out.println("test : "+session.getAttribute("connexion"));
 	System.out.println("test : "+session.getAttribute("mail"));
 	%>
+	<%HistoriqueUtil.creer(session).addPageHistorique("creation_compte"); %>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->

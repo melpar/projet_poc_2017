@@ -1,4 +1,5 @@
 <!doctype html>
+<%@page import="util.HistoriqueUtil"%>
 <%@page import="org.bson.Document"%>
 <%@page import="base.BaseNeo4j"%>
 <%@page import="bean.neo4j.Arbre"%>
@@ -31,6 +32,7 @@
 	
 
 %>
+<%HistoriqueUtil.creer(session).addPageHistorique(nom); %>
 
 <title><%=nom%></title>
   <body>

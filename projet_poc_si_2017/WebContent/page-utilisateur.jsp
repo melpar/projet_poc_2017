@@ -1,5 +1,6 @@
 <!doctype html>
 
+<%@page import="util.HistoriqueUtil"%>
 <%@page import="bean.mariadb.Question"%>
 <%@page import="base.BaseMariaDB"%>
 <%@page import="javafx.scene.control.Alert"%>
@@ -56,7 +57,7 @@
 	request.setAttribute("questions", questions);
 	base.fermer();
 %>
-
+<%HistoriqueUtil.creer(session).addPageHistorique("page-utilisateur"); %>
 <body>
 
 	<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->

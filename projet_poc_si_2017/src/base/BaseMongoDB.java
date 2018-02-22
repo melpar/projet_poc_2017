@@ -114,7 +114,6 @@ public class BaseMongoDB {
 		MongoClientURI uri = new MongoClientURI("mongodb://" + url);
 		mongoClient = new MongoClient(uri);
 		db = mongoClient.getDatabase(base);
-		System.out.println("BASE OUVERTE");
 	}
 
 	/**
