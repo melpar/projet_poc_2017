@@ -98,20 +98,10 @@ var myChart = new Chart(ctx, {
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 99, 132, 0.2)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255,99,132,1)'
             ],
             borderWidth: 1
         }]
@@ -123,35 +113,45 @@ var myChart = new Chart(ctx, {
                     beginAtZero:true
                 }
             }]
+        },
+        legend: {
+            display: false
         }
     }
 });
 </script>
 
 <script>
+<% 
+	java.util.List<Integer> valeursParMois=new java.util.ArrayList<Integer>();
+	java.util.List<String> labelsParMois=new java.util.ArrayList<String>();
+	base.BaseMongoDB base = new base.BaseMongoDB();
+	base.ouvrir();
+	com.mongodb.client.FindIterable<org.bson.Document> documentsMois = base.requete();
+	java.util.Map<java.util.Date, Integer> mapParMois = base.utilisateurParMois(documentsMois);
+	for(java.util.Date key : mapParMois.keySet()){
+		valeursParMois.add(mapParMois.get(key));
+		labelsParMois.add(key.toString());
+	}
+%>
 var ctx = document.getElementById("utilisateursParMois").getContext('2d');
+var valeursParMois=[];
+var labelsParMois=[];
+<% for (int i=0; i<valeursParMois.size(); i++) { %>
+	valeursParMois[<%= i %>] = "<%= valeursParMois.get(i) %>";
+	labelsParMois[<%= i %>] = "<%= labelsParMois.get(i) %>";
+<% } %>
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: labelsParMois,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: valeursParMois,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(54, 162, 235, 0.2)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(54, 162, 235, 1)'
             ],
             borderWidth: 1
         }]
@@ -163,60 +163,96 @@ var myChart = new Chart(ctx, {
                     beginAtZero:true
                 }
             }]
+        },
+        legend: {
+            display: false
         }
     }
 });
 </script>
 
 <script>
-var ctx = document.getElementById("utilisateursParPage").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+<% 
+	java.util.List<Integer> valeursParPage=new java.util.ArrayList<Integer>();
+	java.util.List<String> labelsParPage=new java.util.ArrayList<String>();
+	base = new base.BaseMongoDB();
+	base.ouvrir();
+	com.mongodb.client.FindIterable<org.bson.Document> documents = base.requete();
+	java.util.Map<String, Integer> mapParPage = base.utilisateurParPage(documents);
+	for(String key : mapParPage.keySet()){
+		valeursParPage.add(mapParPage.get(key));
+		labelsParPage.add(key);
+	}
+%>
+	var ctx = document.getElementById("utilisateursParPage").getContext('2d');
+	var valeursParPage=[];
+	var labelsParPage=[];
+	<% for (int i=0; i<valeursParPage.size(); i++) { %>
+		valeursParPage[<%= i %>] = "<%= valeursParPage.get(i) %>";
+		labelsParPage[<%= i %>] = "<%= labelsParPage.get(i) %>";
+	<% } %>
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: labelsParPage,
+	        datasets: [{
+	            data: valeursParPage,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        },
+	        legend: {
+	            display: false
+	        }
+	    }
+	});
 </script>
 
+
+
 <script>
+<% java.util.List<Integer> valeurs=new java.util.ArrayList<Integer>();
+valeurs.add(12); 
+valeurs.add(19); 
+valeurs.add(3); 
+valeurs.add(5);valeurs.add(2);valeurs.add(3);%>
+
 var ctx = document.getElementById("pourcentage").getContext('2d');
+var valeurs=[];
+<% for (int i=0; i<valeurs.size(); i++) { %>
+	valeurs[<%= i %>] = "<%= valeurs.get(i) %>"; 
+<% } %>
+
 var myChart = new Chart(ctx, {
     type: 'polarArea',
     data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: valeurs,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -243,6 +279,9 @@ var myChart = new Chart(ctx, {
                     beginAtZero:true
                 }
             }]
+        },
+        legend: {
+            display: false
         }
     }
 });
