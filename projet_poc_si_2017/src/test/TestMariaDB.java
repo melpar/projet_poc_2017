@@ -52,7 +52,7 @@ public class TestMariaDB {
 			liste_reponse_personne.get(i).setValeur("test " + i);
 		}
 
-		b.inscription(personne, liste_reponse_personne);
+		b.inscription(personne);
 
 		b.fermer();
 	}

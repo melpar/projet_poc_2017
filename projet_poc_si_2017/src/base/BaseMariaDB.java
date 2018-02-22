@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set; 
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -341,6 +343,45 @@ public class BaseMariaDB {
 	}
 
 	/**
+	 * Verification des identifiants de connexion
+	 * 
+	 * @param mail
+	 *            mail de l'utilisateur
+	 * @param mdp
+	 *            Mot de passe de l'utilisateur
+	 * @return true,si les identifiants son correct, false sinon
+	 */
+	public boolean connexionAdmin(String mail, String mdp) {
+		ResultSet rs;
+		try {
+			String query = "select * from T_CONNEXION_ADMIN_COA WHERE COA_idMail = ? AND COA_motDePasse = ?";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+			Cryptage c = new Cryptage(mdp);
+			preparedStmt.setString(2, c.chiffrer());
+			rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+			if (preparedStmt != null) {
+				preparedStmt.close();
+				if (rs != null) {
+					rs.close();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Ajouter les identifiant de connexion dans la basse
 	 * 
 	 * @param con
@@ -453,7 +494,7 @@ public class BaseMariaDB {
 	 * 
 	 */
 
-	public boolean inscription(Personne per, List<ReponsePersonne> rep) {
+	public boolean inscription(Personne per) {
 		if (this.ajouterCon(per.getConnexion()) != true) {
 			return false;
 		}
@@ -461,8 +502,12 @@ public class BaseMariaDB {
 		if (this.ajouterPer(per) != true) {
 			return false;
 		}
-		for (int i = 0; i < rep.size(); i++) {
-			if (this.ajouterRep(per.getConnexion().getCon_idMail(), rep.get(i)) != true) {
+
+		Set cles = per.getReponses().keySet();
+		Iterator it = cles.iterator();
+		while (it.hasNext()) {
+			Question cle = (Question) it.next();
+			if (this.ajouterRep(per.getConnexion().getCon_idMail(), per.getReponses().get(cle)) != true) {
 				return false;
 			}
 		}
