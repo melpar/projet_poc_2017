@@ -20,7 +20,7 @@
     
     <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
   </head>
-<%HistoriqueUtil.creer(session).addPageHistorique("index"); %>
+<%HistoriqueUtil.creer(session).addPageHistorique("Accueil"); %>
 <%
 if(request.getParameter("newsletter") != null){
 	BaseMariaDB base = new BaseMariaDB();
