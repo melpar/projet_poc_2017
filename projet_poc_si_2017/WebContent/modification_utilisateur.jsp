@@ -1,6 +1,5 @@
 <!doctype html>
 
-<%@page import="util.HistoriqueUtil"%>
 <%@page import="bean.mariadb.Personne"%>
 <%@page import="bean.mariadb.Connexion"%>
 <%@page import="bean.mariadb.ReponsePersonne"%>
@@ -19,23 +18,28 @@
 <%
 	BaseMariaDB b = new BaseMariaDB();
 	b.ouvrir();
-
-	HashMap<String, ArrayList<String>> questionnaire = new HashMap<>();
-
+	HashMap<Question, ReponsePersonne> questionnaire = new HashMap<Question, ReponsePersonne> ();
 	Formulaire f = b.getFormulaire();
 	List<Question> liste_question = f.getListeQuesstion();
-	for (int i = 0; i < liste_question.size(); i++) {
-		ArrayList<String> reponses = new ArrayList<>();
-		List<ReponseQuestion> liste_reponse = liste_question.get(i).getQue_listeReponse();
-		for (int y = 0; y < liste_reponse.size(); y++) {
-			reponses.add(liste_reponse.get(y).getReq_texte());
-		}
-		questionnaire.put(liste_question.get(i).getQue_question(), reponses);
+	Personne personne=new Personne();
+	
+	if (/*request.getParameter("modification") != null*/true) {		
+		String mail =request.getParameter("mail");		
+		personne =b.getPersonne("nicolas@gmail.com");		
 	}
-
-	request.setAttribute("questionnaire", questionnaire);
-
+	
+	request.setAttribute("liste_question", liste_question);
+	request.setAttribute("personne", personne);
+	
+	
+	if(request.getParameter("submit") != null){
+		//TODO
+		//a finir !!!!!!!!!!!!!!!!!!
+	
+	}
+	
 	b.fermer();
+	
 %>
 
 
@@ -61,46 +65,66 @@
 
 <!-- <script type="text/javascript" language="javascript" src="project_poc_2017/project_poc_2017.nocache.js"></script> -->
 </head>
-<%HistoriqueUtil.creer(session).addPageHistorique("formulaire-inscription"); %>
+
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<br>
-	<h2 class="w3-center">Forms and Lists</h2>
+	<h2 class="w3-center">Modification des informations du compte</h2>
 
 	<div class="w3-row-padding">
 
+<%
 
-		<form class="w3-container w3-card-4" >
+
+%>
+		<form class="w3-container w3-card-4" method="post" action="formulaire-inscription.jsp"  >
 			<h2>Information personnel</h2>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Nom</label>
+				<input class="w3-input" type="text" disabled="disabled" name="pnom" value="${personne.getPer_nom()}" ><label>Nom</label>
 			</div>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Prenom</label>
+				<input class="w3-input" type="text" disabled="disabled" name="prenom" value="${personne.getPer_prenom()}" ><label>Prenom</label>
 			</div>
 			<div class="w3-section">
-				<input class="w3-input" type="text" required> <label>Email</label>
+				<input class="w3-input" type="text"  disabled="disabled" name="mail" value="${personne.getConnexion().getCon_idMail()}"> 
+				<label>Email</label>
 			</div>
+			
 			<div class="w3-section">
-				<label>A quelle information vous préfere avoir acces ?</label> <br>
-				<input id="male" class="w3-radio" type="radio" name="risque"
-					value="rique"> <label>Risque</label> <br> <input
-					id="female" class="w3-radio" type="radio" name="risque" value="ras">
-				<label>RAS</label> <br>
+				<label>A quelle information préferez vous avoir acces ?</label> <br>
+				<c:if test="${personne.isPer_risque()}">
+					<input id="male" class="w3-radio" type="radio" name="risque" value="rique" checked="checked">
+						<label>Risque</label> <br> 
+					<input	id="female" class="w3-radio" type="radio" name="risque" value="ras">
+						<label>RAS</label> <br>
+				</c:if> 
+				<c:if test="${!personne.isPer_risque()}">
+					<input id="male" class="w3-radio" type="radio" name="risque" value="rique" >
+						<label>Risque</label> <br> 
+					<input	id="female" class="w3-radio" type="radio" name="risque" value="ras" checked="checked">
+						<label>RAS</label> <br>
+				</c:if> 
+					
 			</div>
 
 			<hr>
 			<h2>Questionnaire</h2>
 
-			<c:forEach items="${questionnaire}" var="question">
+			<c:forEach items="${liste_question}" var="question">
 				<ul class="w3-ul w3-border-top">
 					<li>
-						<h3>${question.key}</h3>
-						<select name="${question.value}">
-						 <c:forEach items="${question.value}"
-							var="reponse">							
-								<option value="${reponse}">${reponse}</option>
+						<h3>${question.getQue_question()}</h3>
+						<select name="${question.getQue_id()}">
+						 <c:forEach items="${question.getQue_listeReponse()}"
+							var="reponse">						
+
+							<c:if test="${personne.getReponsePersone(question.getQue_id())!=null}">
+								<option value="${personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur()}" selected>${personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur()} </option>
+							</c:if>
+							<c:if test="${personne.getReponsePersone(question.getQue_id())==null}">							
+								<option value="${reponse.getReq_texte()}">${reponse.getReq_texte()}</option>
+							</c:if>
 							<label></label><br>
 						</c:forEach>
 						</select>
@@ -113,7 +137,7 @@
 
            
 
-			<input type="submit" value="S'inscrire" class="w3-btn w3-theme">
+			<input type="submit" value="Sauvegarder" name="submit" class="w3-btn w3-theme">
 		</form>
 
 	</div>

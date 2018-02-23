@@ -1,7 +1,9 @@
 package bean.mariadb;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import annotation.Table;
 
@@ -57,6 +59,19 @@ public class Personne {
 
 	public void setReponses(Map<Question, ReponsePersonne> reponses) {
 		this.reponses = reponses;
+	}
+
+	public Question getReponsePersone(int idQuestion) {
+		Question q = null;
+		Set cles = this.reponses.keySet();
+		Iterator it = cles.iterator();
+		while (it.hasNext()) {
+			Question cle = (Question) it.next();
+			if (cle.getQue_id() == idQuestion) {
+				return cle;
+			}
+		}
+		return q;
 	}
 
 }
