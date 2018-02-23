@@ -52,7 +52,7 @@ public class HistoriqueConnexion {
 		return pagesVisitées;
 	}
 
-	public void addPagesVisitées(Date date, String page) {
+	public void addPagesVisitees(Date date, String page) {
 		this.pagesVisitées.put(date, page);
 	}
 
