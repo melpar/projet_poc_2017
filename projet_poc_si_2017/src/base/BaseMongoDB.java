@@ -280,8 +280,8 @@ public class BaseMongoDB {
 		for (MongoCursor<Document> curseur = list.iterator(); curseur.hasNext();) {
 			Document document = curseur.next();
 			HistoriqueConnexion connexion = genererConnexion(document);
-			for (Date date : connexion.getPagesVisitées().keySet()) {
-				String url = connexion.getPagesVisitées().get(date);
+			for (Date date : connexion.getPagesVisitees().keySet()) {
+				String url = connexion.getPagesVisitees().get(date);
 				if (result.containsKey(url)) {
 					result.put(url, result.get(url) + 1);
 				} else {
@@ -374,10 +374,10 @@ public class BaseMongoDB {
 		document.append("dateConnexion", connexion.getDateConnexion());
 		document.append("dateDeconnexion", connexion.getDateDeconnexion());
 		List<Document> pages = new ArrayList<Document>();
-		for (Date date : connexion.getPagesVisitées().keySet()) {
+		for (Date date : connexion.getPagesVisitees().keySet()) {
 			Document page = new Document();
 			page.append("dateVisite", date);
-			page.append("url", connexion.getPagesVisitées().get(date));
+			page.append("url", connexion.getPagesVisitees().get(date));
 			pages.add(page);
 		}
 		document.append("pagesVisitees", pages);
