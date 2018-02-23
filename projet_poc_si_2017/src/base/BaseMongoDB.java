@@ -34,7 +34,7 @@ public class BaseMongoDB {
 		BaseMongoDB mongo = new BaseMongoDB();
 		mongo.ouvrir();
 		// mongo.testCreateId();
-		// mongo.testHistorique();
+		mongo.testHistorique();
 		// mongo.testDelete();
 		mongo.visualiser();
 		// mongo.testUtilisateurParPage();
@@ -48,9 +48,12 @@ public class BaseMongoDB {
 	}
 
 	void testHistorique() {
-		HistoriqueConnexion connexion = new HistoriqueConnexion(0, "gg@gg.com", "Wind", "GG",
-				new Date(55, 10, 20, 13, 45, 60));
-		connexion.addPagesVisitées(new Date(55, 10, 22, 13, 50, 60), "maPage2");
+		Date date = new Date();
+		date.setDate(5);
+		date.setMonth(0);
+		date.setYear(118);
+		HistoriqueConnexion connexion = new HistoriqueConnexion(createIdConnexion(), "gg@gg.com", "Wind", "GG", date);
+		connexion.addPagesVisitees(new Date(55, 10, 22, 13, 50, 60), "maPage2");
 		Document document = genererDocument(connexion);
 		ajoutDocument(document);
 		// visualiser();
@@ -61,7 +64,7 @@ public class BaseMongoDB {
 	}
 
 	void testDelete() {
-		removeConnexion(41);
+		removeConnexion(12);
 		visualiser();
 	}
 
@@ -256,7 +259,7 @@ public class BaseMongoDB {
 	public void updateConnexion(Integer idConnexion, Date date, String url) {
 		Document document = requete(idConnexion);
 		HistoriqueConnexion connexion = genererConnexion(document);
-		connexion.addPagesVisitées(date, url);
+		connexion.addPagesVisitees(date, url);
 		Document documentUpdate = genererDocument(connexion);
 		updateDocument(idConnexion, documentUpdate);
 	}
@@ -277,8 +280,8 @@ public class BaseMongoDB {
 		for (MongoCursor<Document> curseur = list.iterator(); curseur.hasNext();) {
 			Document document = curseur.next();
 			HistoriqueConnexion connexion = genererConnexion(document);
-			for (Date date : connexion.getPagesVisitées().keySet()) {
-				String url = connexion.getPagesVisitées().get(date);
+			for (Date date : connexion.getPagesVisitees().keySet()) {
+				String url = connexion.getPagesVisitees().get(date);
 				if (result.containsKey(url)) {
 					result.put(url, result.get(url) + 1);
 				} else {
@@ -371,10 +374,10 @@ public class BaseMongoDB {
 		document.append("dateConnexion", connexion.getDateConnexion());
 		document.append("dateDeconnexion", connexion.getDateDeconnexion());
 		List<Document> pages = new ArrayList<Document>();
-		for (Date date : connexion.getPagesVisitées().keySet()) {
+		for (Date date : connexion.getPagesVisitees().keySet()) {
 			Document page = new Document();
 			page.append("dateVisite", date);
-			page.append("url", connexion.getPagesVisitées().get(date));
+			page.append("url", connexion.getPagesVisitees().get(date));
 			pages.add(page);
 		}
 		document.append("pagesVisitees", pages);
@@ -402,7 +405,7 @@ public class BaseMongoDB {
 		if (document.get("pagesVisitees") instanceof List<?>) {
 			List<Document> pages = (List<Document>) document.get("pagesVisitees");
 			for (Document page : pages) {
-				connexion.addPagesVisitées(page.getDate("dateVisite"), page.getString("url"));
+				connexion.addPagesVisitees(page.getDate("dateVisite"), page.getString("url"));
 			}
 		}
 		return connexion;

@@ -16,7 +16,7 @@ public class HistoriqueConnexion {
 	private String navigateur;
 	private Date dateConnexion;
 	private Date dateDeconnexion;
-	private Map<Date, String> pagesVisitées;
+	private Map<Date, String> pagesVisitees;
 
 	public HistoriqueConnexion(double idConnexion, String idUtilisateur, String systeme, String navigateur,
 			Date dateConnexion) {
@@ -27,7 +27,7 @@ public class HistoriqueConnexion {
 		this.navigateur = navigateur;
 		this.dateConnexion = dateConnexion;
 		this.dateDeconnexion = null;
-		this.pagesVisitées = new HashMap<Date, String>();
+		this.pagesVisitees = new HashMap<Date, String>();
 	}
 
 	public HistoriqueConnexion(double idConnexion, String systeme, String navigateur, Date dateConnexion) {
@@ -37,7 +37,7 @@ public class HistoriqueConnexion {
 		this.navigateur = navigateur;
 		this.dateConnexion = dateConnexion;
 		this.dateDeconnexion = null;
-		this.pagesVisitées = new HashMap<Date, String>();
+		this.pagesVisitees = new HashMap<Date, String>();
 	}
 
 	public Date getDateDeconnexion() {
@@ -48,12 +48,12 @@ public class HistoriqueConnexion {
 		this.dateDeconnexion = dateDeconnexion;
 	}
 
-	public Map<Date, String> getPagesVisitées() {
-		return pagesVisitées;
+	public Map<Date, String> getPagesVisitees() {
+		return pagesVisitees;
 	}
 
-	public void addPagesVisitées(Date date, String page) {
-		this.pagesVisitées.put(date, page);
+	public void addPagesVisitees(Date date, String page) {
+		this.pagesVisitees.put(date, page);
 	}
 
 	public double getIdConnexion() {
