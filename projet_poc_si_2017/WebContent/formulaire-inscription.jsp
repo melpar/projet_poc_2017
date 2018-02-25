@@ -85,13 +85,13 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<br>
-	<h2 class="w3-center">Forms and Lists</h2>
+	<h2 class="w3-center">Formulaire d'inscription</h2>
 
 	<div class="w3-row-padding">
 
 
 		<form class="w3-container w3-card-4" method="post" action="formulaire-inscription.jsp"  >
-			<h2>Information personnel</h2>
+			<h2>Informations personnelles</h2>
 			<div class="w3-section">
 				<input class="w3-input" type="text" required name="nom"> <label>Nom</label>
 			</div>
@@ -110,7 +110,7 @@
 			</div>
 			
 			<div class="w3-section">
-				<label>A quelle information vous préfere avoir acces ?</label> <br>
+				<label>A quelle informations préferez-vous avoir accès ?</label> <br>
 				<input id="male" class="w3-radio" type="radio" name="risque"
 					value="rique"> <label>Risque</label> <br> <input
 					id="female" class="w3-radio" type="radio" name="risque" value="ras">
