@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set; 
+import java.util.Set;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -541,5 +541,31 @@ public class BaseMariaDB {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public boolean updateReponsePersonne(int idQuestion, String reponse, String mail) {
+		try {
+			int rs;
+			String query = "UPDATE `T_REPONSEPERSONNE_REP` SET `REP_idMail` = ?, `REP_reponse` = ? WHERE `T_REPONSEPERSONNE_REP`.`REP_idQuestion` = ?  ";
+			java.sql.PreparedStatement preparedStmt = co.prepareStatement(query);
+			preparedStmt.setString(1, mail);
+			preparedStmt.setString(2, reponse);
+			preparedStmt.setInt(3, idQuestion);
+			rs = preparedStmt.executeUpdate();
+			if (preparedStmt != null) {
+				preparedStmt.close();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -24,19 +24,35 @@
 	Personne personne=new Personne();
 	
 	if (/*request.getParameter("modification") != null*/true) {		
-		String mail =request.getParameter("mail");		
-		personne =b.getPersonne("nicolas@gmail.com");		
+		//String mail =request.getParameter("mail");
+		String mail="nicolas@gmail.com";
+		System.out.println("t2") ;
+		if(request.getParameter("submit") != null){
+			System.out.println("t1") ;
+			for(int i=0;i<liste_question.size();i++){
+				int id =liste_question.get(i).getQue_id();
+				String reponse =request.getParameter(id+"");
+				System.out.println(id +" :"+reponse);
+				if(b.updateReponsePersonne(id, reponse,mail)==false){
+					System.out.println("erreur update") ;
+				}
+			}
+			System.out.println("update ok") ;
+		}		
+		personne =b.getPersonne(mail);		
 	}
 	
 	request.setAttribute("liste_question", liste_question);
 	request.setAttribute("personne", personne);
 	
 	
-	if(request.getParameter("submit") != null){
-		//TODO
-		//a finir !!!!!!!!!!!!!!!!!!
 	
-	}
+	
+	/*List<ReponseQuestion> l = f.getListeQuesstion().get(5).getQue_listeReponse();
+	for (int i=0;i< l.size();i++){
+		System.out.println(l.get(i).getReq_texte());
+	}*/
+	
 	
 	b.fermer();
 	
@@ -78,7 +94,7 @@
 
 
 %>
-		<form class="w3-container w3-card-4" method="post" action="formulaire-inscription.jsp"  >
+		<form class="w3-container w3-card-4" method="post" action="modification_utilisateur.jsp"  >
 			<h2>Information personnel</h2>
 			<div class="w3-section">
 				<input class="w3-input" type="text" disabled="disabled" name="pnom" value="${personne.getPer_nom()}" ><label>Nom</label>
@@ -119,10 +135,10 @@
 						 <c:forEach items="${question.getQue_listeReponse()}"
 							var="reponse">						
 
-							<c:if test="${personne.getReponsePersone(question.getQue_id())!=null}">
+							<c:if test="${personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur().equals(reponse.getReq_texte())}">
 								<option value="${personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur()}" selected>${personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur()} </option>
 							</c:if>
-							<c:if test="${personne.getReponsePersone(question.getQue_id())==null}">							
+							<c:if test="${!personne.getReponses().get(personne.getReponsePersone(question.getQue_id())).getValeur().equals(reponse.getReq_texte())}">							
 								<option value="${reponse.getReq_texte()}">${reponse.getReq_texte()}</option>
 							</c:if>
 							<label></label><br>
