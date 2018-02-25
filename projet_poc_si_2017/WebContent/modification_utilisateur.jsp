@@ -95,7 +95,7 @@
 
 %>
 		<form class="w3-container w3-card-4" method="post" action="modification_utilisateur.jsp"  >
-			<h2>Information personnel</h2>
+			<h2>Informations personnelles</h2>
 			<div class="w3-section">
 				<input class="w3-input" type="text" disabled="disabled" name="pnom" value="${personne.getPer_nom()}" ><label>Nom</label>
 			</div>
@@ -108,7 +108,7 @@
 			</div>
 			
 			<div class="w3-section">
-				<label>A quelle information préferez vous avoir acces ?</label> <br>
+				<label>A quelle informations préferez-vous avoir accès ?</label> <br>
 				<c:if test="${personne.isPer_risque()}">
 					<input id="male" class="w3-radio" type="radio" name="risque" value="rique" checked="checked">
 						<label>Risque</label> <br> 
