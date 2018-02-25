@@ -37,6 +37,7 @@ $('select').material_select();</script>
 
   <div id="main">
   		<h1 class="header center orange-text">Envoyer un mail à la newsletter</h1>
+  		<jsp:include page="avertissement.jsp"></jsp:include>
   		<div class="col s12">
   		<div class="input-field col s12 m6">
   			<select>

@@ -37,6 +37,7 @@ $('select').material_select();</script>
 
   <div id="main">
   		<h1 class="header center orange-text">Editer les pages personnalisées</h1>
+  		<jsp:include page="avertissement.jsp"></jsp:include>
   		<jsp:include page="menu.jsp"></jsp:include>
   </div>	
 </body>
