@@ -22,13 +22,9 @@
 	Formulaire f = b.getFormulaire();
 	List<Question> liste_question = f.getListeQuesstion();
 	Personne personne=new Personne();
-	
-	if (/*request.getParameter("modification") != null*/true) {		
-		//String mail =request.getParameter("mail");
-		String mail="nicolas@gmail.com";
-		System.out.println("t2") ;
+	String mail;
+	if ((mail=(String)request.getSession().getAttribute("mail"))!=null) {		
 		if(request.getParameter("submit") != null){
-			System.out.println("t1") ;
 			for(int i=0;i<liste_question.size();i++){
 				int id =liste_question.get(i).getQue_id();
 				String reponse =request.getParameter(id+"");
@@ -38,6 +34,7 @@
 				}
 			}
 			System.out.println("update ok") ;
+			response.sendRedirect("page-utilisateur.jsp");
 		}		
 		personne =b.getPersonne(mail);		
 	}

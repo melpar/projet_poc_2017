@@ -129,8 +129,10 @@
 				</c:forEach> 
 			</div>
 		</div>
+		<div class="w3-container w3-theme w3-large"><span class="w3-left"><a  href="modification_utilisateur.jsp" style="text-decoration:none">Modifier</a></span></div>
+		<br>
 	</div>
-
+	
 
 	<jsp:include page="footer.jsp"></jsp:include>
 

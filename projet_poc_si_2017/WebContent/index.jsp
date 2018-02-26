@@ -173,7 +173,7 @@ if(request.getParameter("newsletter") != null){
         <div class="w3-half">
             <div class="w3-card white">
                 <div class="w3-container w3-theme">
-                    <h3>Accesibiliter et disponibiliter</h3>
+                    <h3>Accesibilité et disponibilité</h3>
                 </div>
                 <div class="w3-container">
                     <h3 class="w3-text-theme">Movies 2014</h3>
