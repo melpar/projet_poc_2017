@@ -1,0 +1,24 @@
+CREATE(MP_RAS:MP_Risque{nom:"RAS"})
+CREATE(MP_NON_RAS:MP_Risque{nom:"nonRAS"})
+
+CREATE(MP_ASSURANCE_RAS:MP_PROJET{nom:"changerAssurance"})
+CREATE(MP_EMPRUNT_RAS:MP_PROJET{nom:"faireEmprunt"})
+
+CREATE(MP_ASSURANCE_NON_RAS:MP_PROJET{nom:"changerAssurance", titre:"Je veux changer d’assurance", contenu:"contenu informationnel", kit:"non", listeDiffusion:"oui", accesContrat:"oui"})
+CREATE(MP_EMPRUNT_NON_RAS:MP_PROJET{nom:"faireEmprunt", titre:"Je veux emprunter", contenu:"contenu informationnel", kit:"oui", listeDiffusion:"oui", accesContrat:"oui"})
+
+CREATE(MP_PROJET:MP_AVANCE{nom:"projet"})
+CREATE(MP_REFUS:MP_AVANCE{nom:"refus", titre:"Je suis un peu perdu dans mes démarches"})
+CREATE(MP_INTERMEDIAIRE:MP_AVANCE{nom:"intermediaire", titre:"Je suis un peu perdu dans mes démarches"})
+
+CREATE(MP_MLTERME:MP_TERME{nom:"moyenLongTerme", titre:"J’envisage de faire un emprunt à moyen/long terme et je recherche des informations", contenu:"Contenu informationnel", listeDiffusion:"oui", accesContrat:"oui", mailRelance:"oui"})
+CREATE(MP_CTERME:MP_TERME{nom:"courtTerme", titre:"J’envisage de faire un emprunt à court terme et je suis déjà informé par we moë", contenu:"contenu informationnel", listeDiffusion:"non", accesContrat:"oui", mailRelance:"non"})
+
+CREATE(MP_RAS)-[:MP_SOUHAITE]->(MP_ASSURANCE_RAS)
+CREATE(MP_RAS)-[:MP_SOUHAITE]->(MP_EMPRUNT_RAS)
+CREATE(MP_NON_RAS)-[:MP_SOUHAITE]->(MP_ASSURANCE_NON_RAS)
+CREATE(MP_NON_RAS)-[:MP_SOUHAITE]->(MP_EMPRUNT_NON_RAS)
+CREATE(MP_EMPRUNT_RAS)-[:MP_A_ETAT_DE]->(MP_PROJET)
+CREATE(MP_EMPRUNT_RAS)-[:MP_A_ETAT_DE]->(MP_INTERMEDIAIRE)
+CREATE(MP_PROJET)-[:MP_DANS]->(MP_MLTERME)
+CREATE(MP_PROJET)-[:MP_DANS]->(MP_CTERME)
