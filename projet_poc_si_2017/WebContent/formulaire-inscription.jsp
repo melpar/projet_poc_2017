@@ -38,7 +38,13 @@
 		personne.setConnexion(connexion);
 		personne.setPer_nom(nom);
 		personne.setPer_prenom(prenom);
-		personne.setPer_risque(false);	
+		if(risque.equals("oui")){
+			personne.setPer_risque(true);	
+		}
+		else {
+			personne.setPer_risque(false);	
+		}
+		
 		
 		for (int i = 0; i < liste_question.size(); i++) {
 			int identifiant = liste_question.get(i).getQue_id();
@@ -112,9 +118,9 @@
 			<div class="w3-section">
 				<label>A quelle informations préferez-vous avoir accès ?</label> <br>
 				<input id="male" class="w3-radio" type="radio" name="risque"
-					value="rique"> <label>Risque</label> <br> <input
-					id="female" class="w3-radio" type="radio" name="risque" value="ras">
-				<label>RAS</label> <br>
+					value="oui"> <label>Risque aggravé de santé</label> <br> <input
+					id="female" class="w3-radio" type="radio" name="risque" value="non">
+				<label>Pas de risque aggravé de santé</label> <br>
 			</div>
 
 			<hr>

@@ -108,13 +108,13 @@
 				<label>A quelle informations préferez-vous avoir accès ?</label> <br>
 				<c:if test="${personne.isPer_risque()}">
 					<input id="male" class="w3-radio" type="radio" name="risque" value="rique" checked="checked">
-						<label>Risque</label> <br> 
-					<input	id="female" class="w3-radio" type="radio" name="risque" value="ras">
+						<label>RisqueRisque aggravé de santé</label> <br> 
+					<input	id="female" class="w3-radio" type="radio" name="risque" value="oui">
 						<label>RAS</label> <br>
 				</c:if> 
 				<c:if test="${!personne.isPer_risque()}">
 					<input id="male" class="w3-radio" type="radio" name="risque" value="rique" >
-						<label>Risque</label> <br> 
+						<label>Pas de risque aggravé de santé</label> <br> 
 					<input	id="female" class="w3-radio" type="radio" name="risque" value="ras" checked="checked">
 						<label>RAS</label> <br>
 				</c:if> 
