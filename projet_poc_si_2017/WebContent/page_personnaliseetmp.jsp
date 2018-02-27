@@ -21,7 +21,7 @@
   </head>
 
 
-<title>ChangerAssurance</title>
+<title>Changer d'assurance</title>
   <body>
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->

@@ -41,14 +41,7 @@
 	
 	request.setAttribute("liste_question", liste_question);
 	request.setAttribute("personne", personne);
-	
-	
-	
-	
-	/*List<ReponseQuestion> l = f.getListeQuesstion().get(5).getQue_listeReponse();
-	for (int i=0;i< l.size();i++){
-		System.out.println(l.get(i).getReq_texte());
-	}*/
+
 	
 	
 	b.fermer();

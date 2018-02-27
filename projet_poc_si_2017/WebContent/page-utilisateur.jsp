@@ -77,7 +77,7 @@
 		<div class="w3-half">
 			<div class="w3-card white">
 				<div class="w3-container w3-indigo">
-					<h3>Mes information personnel</h3>
+					<h3>Mes information personnelles</h3>
 				</div>
 				<ul class="w3-ul w3-border-top">
 					<li>
@@ -117,7 +117,7 @@
 		<div class="w3-card white">
 			<div class="w3-padding w3-white w3-display-container">
 				<div class="w3-container w3-orange">
-					<h3>Mes reponses au questionnaire :</h3>
+					<h3>Mes réponses au questionnaire :</h3>
 				</div>
 				<c:forEach items="${questions}" var="question">
 					<ul class="w3-ul w3-border-top">

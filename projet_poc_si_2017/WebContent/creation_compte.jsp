@@ -40,7 +40,7 @@
 
     
     <hr>
-    <h2 class="w3-center">Inscription ou connection</h2>
+    <h2 class="w3-center">Inscription ou connexion</h2>
     
     
     <div class="w3-row-padding">

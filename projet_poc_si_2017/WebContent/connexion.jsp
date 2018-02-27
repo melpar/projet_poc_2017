@@ -32,7 +32,7 @@
     
     
     <hr>
-    <h2 class="w3-center">Inscription ou connection</h2>
+    <h2 class="w3-center">Inscription ou connexion</h2>
     
     
     <div class="w3-row-padding">
@@ -42,7 +42,7 @@
         
         <div class="w3-half">
             <form class="w3-container w3-card-4">
-                <h2>Connection</h2>
+                <h2>Connexion</h2>
                 <div class="w3-section">
                     <input class="w3-input" type="text" required>
                     <label>Mail</label>

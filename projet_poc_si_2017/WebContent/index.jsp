@@ -71,7 +71,7 @@ if(request.getParameter("newsletter") != null){
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux changer d'assurance</h3><br>
                 <img alt="logo" src="img/logo-changement.png" height="60px">
-                <p>Il n'est pas évident de s'y retrouver dans tous les différents textes de 
+                <p>Il n'est pas évident de s'y retrouver dans tous les textes de 
                 loi qui entourent le changement de son assurance emprunteur : loi Chatel, loi 
                 Lagarde, loi Hamon, loi Bourquin sur la résiliation annuelle. Si vous avez souscrit
                  à  un emprunt et que vous vous demandez si l'on peut changer d'assurance 
@@ -85,7 +85,7 @@ if(request.getParameter("newsletter") != null){
             <div class="w3-card w3-container" style="min-height:460px">
                 <h3>Je veux faire un emprunt et j'ai besoin d'informations</h3><br>
                 <img alt="logo" src="img/logo-cheque.png" height="60px">
-                <p>Vous souhaitez réaliser un emprunt mais vous àªtes perdu dans les démarches à 
+                <p>Vous souhaitez réaliser un emprunt mais vous êtes perdu dans les démarches à 
                 suivre? Voici les réponses à  vos questions. Pour des informations plus adaptées 
                 à  votre parcours, n'hésitez pas à  vous inscrire.</p>
                 <button id="bouton_infos_cre" class="w3-button w3-theme-d3" onclick="" style="font-weight:900;">En savoir plus</button>                 
