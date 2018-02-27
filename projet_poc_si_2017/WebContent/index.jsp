@@ -150,23 +150,6 @@ if(request.getParameter("newsletter") != null){
                 <div class="w3-container w3-indigo">
                     <h3>Strategie de referencement</h3>
                 </div>
-                <div class="w3-container">
-                    <h3 class="w3-text-indigo">Movies 2014</h3>
-                </div>
-                <ul class="w3-ul w3-border-top">
-                    <li>
-                        <h3>Frozen</h3>
-                        <p>The response to the animations was ridiculous</p>
-                    </li>
-                    <li>
-                        <h3>The Fault in Our Stars</h3>
-                        <p>Touching, gripping and genuinely well made</p>
-                    </li>
-                    <li>
-                        <h3>The Avengers</h3>
-                        <p>A huge success for Marvel and Disney</p>
-                    </li>
-                </ul>
             </div>
         </div>
         
@@ -175,23 +158,6 @@ if(request.getParameter("newsletter") != null){
                 <div class="w3-container w3-theme">
                     <h3>Accesibilité et disponibilité</h3>
                 </div>
-                <div class="w3-container">
-                    <h3 class="w3-text-theme">Movies 2014</h3>
-                </div>
-                <ul class="w3-ul w3-border-top">
-                    <li>
-                        <h3>Frozen</h3>
-                        <p>The response to the animations was ridiculous</p>
-                    </li>
-                    <li>
-                        <h3>The Fault in Our Stars</h3>
-                        <p>Touching, gripping and genuinely well made</p>
-                    </li>
-                    <li>
-                        <h3>The Avengers</h3>
-                        <p>A huge success for Marvel and Disney</p>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
